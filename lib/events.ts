@@ -121,7 +121,7 @@ export const events: EventStop[] = [
   { id: 49, title: "Le attività del Parco", host: "Parco Nazionale dello Stelvio", categories: ["culture", "kids"], x: 20.1, y: 39.4 },
   { id: 50, title: "Apertisana: la tisana per il tuo benessere", host: "Estetica Paola Bormio", categories: ["food"], x: 18.1, y: 36.3, timing: [{ start: hm(17), end: hm(20), label: "17.00–20.00" }] },
   { id: 51, title: "Arrosticini, Birra Reit Session IPA e DJ set", host: "Clem Pub", categories: ["music", "food"], x: 31.4, y: 53.5 },
-  { id: 52, title: "Dolce, salato, Birra Stelvio e live music", host: "Artidea · Punto d’oro · Il Salumaio · Aquolina · Sunrise", categories: ["music", "food"], x: 21.4, y: 69.3, timing: [{ start: hm(17), end: hm(20), label: "17.00–20.00 · Valentino Boscacci" }, { start: hm(20), end: hm(23), label: "20.00–23.00 · Gabriel Bertolina" }] },
+  { id: 52, title: "Dolce, salato, Birra Stelvio e live music", host: "Artidea, Punto d’oro, Il Salumaio, Aquolina, Sunrise", categories: ["music", "food"], x: 21.4, y: 69.3, timing: [{ start: hm(17), end: hm(20), label: "17.00–20.00, Valentino Boscacci" }, { start: hm(20), end: hm(23), label: "20.00–23.00, Gabriel Bertolina" }] },
   { id: 53, title: "Mostra: Arte e semi di meraviglia", host: "Renata Casolini", categories: ["culture"], x: 15.1, y: 61.3, timing: [{ start: hm(18), end: hm(19), label: "18.00", fixed: true }] },
   { id: 54, title: "Suona la Banda: itinerante", host: "Filarmonica Bormiese", categories: ["music", "show"], x: 74.4, y: 30.9, note: "Evento itinerante" },
 ];

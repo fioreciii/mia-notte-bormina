@@ -55,7 +55,7 @@
   --ink-soft: #53645e;
   --primary: #183f36;
   --on-primary: #fffdf8;
-  --copper: #b95439;
+  --copper: #ad4b34;
   --gold: #bd8824;
   --line: rgba(24, 63, 54, 0.15);
   --shadow: 0 18px 46px rgba(58, 45, 31, 0.13);
@@ -107,6 +107,28 @@ a {
 
 button {
   color: inherit;
+}
+
+button,
+a,
+input {
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: 3px;
 }
 
 .app-shell {
@@ -294,7 +316,7 @@ button {
   color: var(--copper);
   font-family: inherit;
   font-size: 0.92em;
-  font-style: oblique 12deg;
+  font-style: oblique -12deg;
   font-weight: 390;
   letter-spacing: -0.045em;
 }
@@ -417,7 +439,7 @@ button {
   border-radius: 50%;
   background: var(--marker-color);
   box-shadow: 0 3px 8px rgba(31, 43, 38, 0.2);
-  color: #fff;
+  color: var(--on-primary);
   cursor: pointer;
   font-size: clamp(8px, 0.72vw, 11px);
   font-weight: 650;
@@ -446,11 +468,11 @@ button {
   height: 29px;
   transform: translate(-50%, -80%);
   place-items: center;
-  border: 2px solid white;
+  border: 2px solid var(--on-primary);
   border-radius: 50% 50% 50% 8px;
   background: var(--copper);
   box-shadow: 0 5px 12px rgba(40, 29, 22, 0.22);
-  color: #fff;
+  color: var(--on-primary);
 }
 
 .map-footer {
@@ -612,6 +634,10 @@ button {
   background: var(--surface-raised);
 }
 
+.search-box:focus-within {
+  border-color: var(--copper);
+}
+
 .search-box svg {
   color: var(--ink-soft);
 }
@@ -683,7 +709,7 @@ button {
 
 .category-chip.is-active .category-icon {
   background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  color: var(--on-primary);
 }
 
 .inspiration,
@@ -711,78 +737,65 @@ button {
 }
 
 .preset-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  overflow-x: auto;
   gap: 10px;
+  padding: 1px 1px 6px;
+  scroll-padding-inline: 1px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.preset-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .preset-card {
-  position: relative;
-  display: flex;
-  min-height: 135px;
-  flex-direction: column;
-  align-items: flex-start;
-  overflow: hidden;
-  padding: 16px;
-  border: 0;
-  border-radius: 20px;
-  background: var(--primary);
-  box-shadow: 0 10px 24px rgba(45, 44, 33, 0.11);
-  color: #fff;
+  display: grid;
+  min-height: 94px;
+  flex: 0 0 min(310px, calc(62% - 5px));
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--ink);
   cursor: pointer;
+  scroll-snap-align: start;
   text-align: left;
 }
 
-.preset-card::after {
-  position: absolute;
-  right: -22px;
-  bottom: -32px;
-  width: 102px;
-  height: 102px;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 48% 52% 60% 40%;
-  content: "";
-  transform: rotate(26deg);
+.preset-card:hover {
+  border-color: color-mix(in srgb, var(--copper) 70%, transparent);
+  background: var(--surface-raised);
+  transform: translateY(-1px);
 }
 
-.preset-2 {
-  background: #ba5c3f;
-}
-
-.preset-3 {
-  background: #176b83;
-}
-
-.preset-4 {
-  background: #9a6a27;
-}
-
-.preset-card .preset-index {
-  margin-bottom: auto;
-  opacity: 0.65;
-  font-family: var(--font-sans);
-  font-size: 11px;
-  font-weight: 520;
+.preset-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
 }
 
 .preset-card strong {
-  margin-top: 18px;
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 560;
   letter-spacing: -0.018em;
+  line-height: 1.05;
 }
 
 .preset-card small {
-  margin-top: 4px;
-  opacity: 0.78;
-  font-size: 10px;
+  margin-top: 5px;
+  color: var(--ink-soft);
+  font-size: 11px;
+  line-height: 1.25;
 }
 
-.preset-card svg {
-  position: absolute;
-  top: 15px;
-  right: 15px;
+.preset-card .preset-route {
+  color: var(--copper);
 }
 
 .event-list-heading {
@@ -806,21 +819,25 @@ button {
 }
 
 .event-list {
-  display: grid;
-  gap: 9px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--card) 54%, transparent);
 }
 
 .event-card {
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 44px;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--card) 74%, transparent);
+  border: 0;
+  background: transparent;
   transition:
-    border 160ms ease,
-    transform 160ms ease;
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.event-card + .event-card {
+  border-top: 1px solid var(--line);
 }
 
 .event-card-actions {
@@ -832,8 +849,8 @@ button {
 }
 
 .event-card.is-selected {
-  border-color: color-mix(in srgb, var(--copper) 54%, transparent);
-  box-shadow: 0 8px 20px rgba(51, 47, 35, 0.07);
+  background: color-mix(in srgb, var(--copper) 7%, transparent);
+  box-shadow: inset 3px 0 0 var(--copper);
 }
 
 .event-card-main {
@@ -1219,13 +1236,6 @@ button {
     gap: 18px;
   }
 
-  .preset-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .preset-card {
-    min-height: 112px;
-  }
 }
 
 @media (max-width: 760px) {
@@ -1357,12 +1367,12 @@ button {
   }
 
   .preset-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
   }
 
   .preset-card {
-    min-height: 126px;
+    min-height: 94px;
+    flex-basis: min(290px, 82vw);
   }
 
   .start-options {
@@ -1443,7 +1453,7 @@ button {
 
   .mobile-nav button.is-active {
     background: rgba(255, 255, 255, 0.12);
-    color: #fff;
+    color: var(--on-primary);
   }
 
   .mobile-nav b {
@@ -1457,7 +1467,7 @@ button {
     place-items: center;
     border-radius: 999px;
     background: var(--copper);
-    color: white;
+    color: var(--on-primary);
     font-size: 8px;
   }
 }
@@ -1465,14 +1475,6 @@ button {
 @media (max-width: 390px) {
   .hero h1 {
     font-size: 39px;
-  }
-
-  .preset-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .preset-card {
-    min-height: 105px;
   }
 
   .start-options {

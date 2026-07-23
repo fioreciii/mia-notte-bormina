@@ -61,6 +61,13 @@ const categories: Category[] = [
   "shopping",
 ];
 
+const presetCategories: Record<string, Category> = {
+  family: "kids",
+  taste: "food",
+  music: "music",
+  culture: "culture",
+};
+
 const themeLabels: Record<
   Language,
   Record<Theme, { label: string; action: string }>
@@ -472,24 +479,26 @@ export function NightPlanner() {
             {!search && activeCategory === "all" && (
               <section className="inspiration">
                 <div className="section-heading">
-                  <div>
-                    <p className="section-kicker">{t.inspiration}</p>
-                    <h2>{language === "it" ? "Che notte vuoi vivere?" : language === "en" ? "What kind of night are you after?" : language === "es" ? "¿Qué noche quieres vivir?" : "Welche Nacht möchtest du erleben?"}</h2>
-                  </div>
+                  <h2>{language === "it" ? "Che notte vuoi vivere?" : language === "en" ? "What kind of night are you after?" : language === "es" ? "¿Qué noche quieres vivir?" : "Welche Nacht möchtest du erleben?"}</h2>
                 </div>
                 <div className="preset-grid">
-                  {presets.map((preset, index) => {
+                  {presets.map((preset) => {
                     const copy = presetLabels[language][preset.id];
                     return (
                       <button
                         key={preset.id}
-                        className={`preset-card preset-${index + 1}`}
+                        className="preset-card"
                         onClick={() => selectPreset(preset.ids)}
                       >
-                        <span className="preset-index">0{index + 1}</span>
-                        <strong>{copy.label}</strong>
-                        <small>{copy.description}</small>
-                        <Route size={19} />
+                        <CategoryIcon
+                          category={presetCategories[preset.id]}
+                          size={20}
+                        />
+                        <span className="preset-copy">
+                          <strong>{copy.label}</strong>
+                          <small>{copy.description}</small>
+                        </span>
+                        <Route className="preset-route" size={18} />
                       </button>
                     );
                   })}
@@ -499,10 +508,7 @@ export function NightPlanner() {
 
             <section className="event-list-section">
               <div className="section-heading event-list-heading">
-                <div>
-                  <p className="section-kicker">{t.allStops}</p>
-                  <h2>{visibleEvents.length} {t.stops}</h2>
-                </div>
+                <h2>{visibleEvents.length} {t.stops}</h2>
                 <div className="list-actions">
                   <button
                     onClick={() =>
@@ -543,13 +549,10 @@ export function NightPlanner() {
           >
             <div className="route-controls">
               <div className="section-heading">
-                <div>
-                  <p className="section-kicker">{t.startTitle}</p>
-                  <h2>
-                    {selected.size}{" "}
-                    {selected.size === 1 ? t.stop : t.stops} {t.selected}
-                  </h2>
-                </div>
+                <h2>
+                  {selected.size}{" "}
+                  {selected.size === 1 ? t.stop : t.stops} {t.selected}
+                </h2>
                 {selected.size > 0 && (
                   <button className="text-button" onClick={() => setSelected(new Set())}>
                     {t.clear}

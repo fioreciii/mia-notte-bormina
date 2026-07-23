@@ -133,7 +133,7 @@ export function InteractiveMap({
             </div>
             {activeEvent.timing && (
               <div className="time-row">
-                {activeEvent.timing.map((time) => time.label).join(" · ")}
+                {activeEvent.timing.map((time) => time.label).join(" / ")}
               </div>
             )}
             <button

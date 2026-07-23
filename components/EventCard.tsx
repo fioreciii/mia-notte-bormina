@@ -39,7 +39,7 @@ export function EventCard({
         {event.timing && (
           <div className="time-row">
             <Clock3 size={14} />
-            {event.timing.map((time) => time.label).join(" · ")}
+            {event.timing.map((time) => time.label).join(" / ")}
           </div>
         )}
       </button>
