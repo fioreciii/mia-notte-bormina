@@ -1,16 +1,76 @@
+@font-face {
+  font-family: "Arizona Mix";
+  src: url("/fonts/arizona-mix.woff2") format("woff2-variations");
+  font-style: oblique -14deg 0deg;
+  font-weight: 200 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Arizona Sans";
+  src: url("/fonts/arizona-sans.woff2") format("woff2-variations");
+  font-style: oblique -14deg 0deg;
+  font-weight: 200 700;
+  font-display: swap;
+}
+
 :root {
+  color-scheme: dark;
+  --paper: #0c1715;
+  --paper-deep: #14231f;
+  --card: #172924;
+  --ink: #f2ede3;
+  --ink-soft: #a9b7b1;
+  --primary: #28584e;
+  --on-primary: #fffaf0;
+  --copper: #ef8061;
+  --gold: #e0b652;
+  --line: rgba(242, 237, 227, 0.13);
+  --shadow: 0 22px 58px rgba(0, 0, 0, 0.34);
+  --marker-default: #b78a38;
+  --surface: rgba(255, 255, 255, 0.055);
+  --surface-raised: rgba(255, 255, 255, 0.085);
+  --surface-solid: #172924;
+  --ambient: rgba(65, 127, 111, 0.2);
+  --map-frame: #101c19;
+  --info: #81c8dc;
+  --info-bg: rgba(88, 181, 207, 0.14);
+  --notice: #efd17c;
+  --notice-bg: rgba(224, 182, 82, 0.14);
+  --danger: #ffb09a;
+  --danger-bg: rgba(239, 128, 97, 0.16);
+  --font-display: "Arizona Mix", Iowan Old Style, serif;
+  --font-sans: "Arizona Sans", ui-sans-serif, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --radius-lg: 28px;
+  --radius-md: 18px;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
   --paper: #f3eee4;
   --paper-deep: #e9e0d1;
   --card: #fffdf8;
-  --ink: #183f36;
-  --ink-soft: #4f625c;
-  --copper: #bf5c3e;
-  --gold: #d8a637;
+  --ink: #173d34;
+  --ink-soft: #53645e;
+  --primary: #183f36;
+  --on-primary: #fffdf8;
+  --copper: #b95439;
+  --gold: #bd8824;
   --line: rgba(24, 63, 54, 0.15);
   --shadow: 0 18px 46px rgba(58, 45, 31, 0.13);
-  --marker-default: #d4aa4b;
-  --radius-lg: 28px;
-  --radius-md: 18px;
+  --marker-default: #c99b38;
+  --surface: rgba(255, 255, 255, 0.38);
+  --surface-raised: rgba(255, 255, 255, 0.56);
+  --surface-solid: #fffdf8;
+  --ambient: rgba(255, 255, 255, 0.85);
+  --map-frame: #faf7f0;
+  --info: #176b83;
+  --info-bg: rgba(23, 107, 131, 0.1);
+  --notice: #765918;
+  --notice-bg: rgba(216, 166, 55, 0.13);
+  --danger: #8f3d2a;
+  --danger-bg: #f4ded6;
 }
 
 * {
@@ -27,13 +87,12 @@ body {
   margin: 0;
   min-width: 320px;
   background:
-    radial-gradient(circle at 12% 3%, rgba(255, 255, 255, 0.85), transparent 26rem),
+    radial-gradient(circle at 12% 3%, var(--ambient), transparent 26rem),
     linear-gradient(135deg, rgba(191, 92, 62, 0.025) 25%, transparent 25%) 0 0 / 32px 32px,
     var(--paper);
   color: var(--ink);
-  font-family:
-    Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  font-family: var(--font-sans);
+  font-variation-settings: "wght" 400;
 }
 
 button,
@@ -95,9 +154,10 @@ button {
   place-items: center;
   border: 1px solid currentColor;
   border-radius: 50%;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
   font-size: 13px;
-  letter-spacing: 0.06em;
+  font-weight: 560;
+  letter-spacing: -0.01em;
 }
 
 .brand > div {
@@ -108,14 +168,17 @@ button {
 
 .brand span:not(.brand-mark) {
   color: var(--copper);
-  font-family: "Snell Roundhand", "Segoe Script", cursive;
-  font-size: 15px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-style: oblique 12deg;
+  font-weight: 430;
 }
 
 .brand strong {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 17px;
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 560;
+  letter-spacing: -0.018em;
 }
 
 .header-actions {
@@ -126,13 +189,15 @@ button {
   gap: 7px;
   color: var(--ink-soft);
   font-size: 13px;
-  font-weight: 650;
+  font-weight: 520;
 }
 
+.theme-toggle,
 .language-switcher {
   position: relative;
 }
 
+.theme-toggle,
 .language-current {
   display: flex;
   align-items: center;
@@ -141,10 +206,18 @@ button {
   padding: 0 12px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.55);
+  background: var(--surface-raised);
   cursor: pointer;
   font-size: 13px;
-  font-weight: 750;
+  font-weight: 560;
+}
+
+.theme-toggle {
+  gap: 7px;
+}
+
+.theme-toggle svg {
+  color: var(--copper);
 }
 
 .language-menu {
@@ -172,7 +245,7 @@ button {
   background: transparent;
   cursor: pointer;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 560;
 }
 
 .language-menu button:hover,
@@ -192,31 +265,38 @@ button {
   max-width: 750px;
 }
 
-.eyebrow,
-.section-kicker {
-  margin: 0 0 9px;
+.eyebrow {
+  margin: 0 0 8px;
   color: var(--copper);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 520;
+  letter-spacing: 0;
+}
+
+.section-kicker {
+  margin: 0 0 4px;
+  color: var(--copper);
+  font-size: 12px;
+  font-weight: 520;
+  letter-spacing: 0;
 }
 
 .hero h1 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
   font-size: clamp(42px, 6vw, 80px);
-  font-weight: 400;
-  letter-spacing: -0.055em;
-  line-height: 0.95;
+  font-weight: 470;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
 }
 
 .hero h1 em {
   color: var(--copper);
-  font-family: "Snell Roundhand", "Segoe Script", cursive;
-  font-size: 0.85em;
-  font-weight: 400;
-  letter-spacing: -0.035em;
+  font-family: inherit;
+  font-size: 0.92em;
+  font-style: oblique 12deg;
+  font-weight: 390;
+  letter-spacing: -0.045em;
 }
 
 .hero-copy > p:last-child {
@@ -236,13 +316,13 @@ button {
   padding: 14px 18px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.4);
+  background: var(--surface);
 }
 
 .selection-pill strong {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
   font-size: 26px;
-  font-weight: 500;
+  font-weight: 560;
 }
 
 .selection-pill span {
@@ -276,9 +356,9 @@ button {
 
 .map-shell {
   overflow: hidden;
-  border: 1px solid rgba(24, 63, 54, 0.16);
+  border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: #faf7f0;
+  background: var(--map-frame);
   box-shadow: var(--shadow);
 }
 
@@ -298,6 +378,10 @@ button {
   width: 100%;
   height: auto;
   user-select: none;
+}
+
+:root[data-theme="dark"] .map-image {
+  filter: brightness(0.86) saturate(0.88);
 }
 
 .route-lines {
@@ -336,7 +420,7 @@ button {
   color: #fff;
   cursor: pointer;
   font-size: clamp(8px, 0.72vw, 11px);
-  font-weight: 800;
+  font-weight: 650;
   line-height: 1;
   transition:
     transform 160ms ease,
@@ -375,13 +459,14 @@ button {
   min-height: 48px;
   padding: 10px 16px;
   border-top: 1px solid var(--line);
+  background: var(--surface-solid);
   color: var(--ink-soft);
   font-size: 11px;
 }
 
 .map-footer span:last-child {
   color: var(--ink);
-  font-weight: 750;
+  font-weight: 600;
 }
 
 .pick-start-banner {
@@ -397,11 +482,11 @@ button {
   padding: 10px 14px;
   transform: translateX(-50%);
   border-radius: 999px;
-  background: var(--ink);
+  background: var(--primary);
   box-shadow: var(--shadow);
-  color: white;
+  color: var(--on-primary);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.2;
 }
 
@@ -441,8 +526,8 @@ button {
 .event-number {
   color: var(--copper);
   font-size: 10px;
-  font-weight: 850;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  letter-spacing: 0;
 }
 
 .event-card-heading {
@@ -463,9 +548,10 @@ button {
 
 .event-card-heading h3 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 560;
+  letter-spacing: -0.015em;
   line-height: 1.2;
 }
 
@@ -481,7 +567,7 @@ button {
   margin-top: 11px;
   color: var(--copper);
   font-size: 11px;
-  font-weight: 750;
+  font-weight: 600;
 }
 
 .button {
@@ -493,7 +579,7 @@ button {
   border-radius: 999px;
   cursor: pointer;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .map-popover .button {
@@ -502,9 +588,9 @@ button {
 }
 
 .button-primary {
-  background: var(--ink);
+  background: var(--primary);
   box-shadow: 0 8px 18px rgba(24, 63, 54, 0.16);
-  color: #fff;
+  color: var(--on-primary);
 }
 
 .button-light {
@@ -523,7 +609,7 @@ button {
   padding: 0 15px;
   border: 1px solid var(--line);
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.48);
+  background: var(--surface-raised);
 }
 
 .search-box svg {
@@ -541,7 +627,7 @@ button {
 }
 
 .search-box input::placeholder {
-  color: #78847f;
+  color: var(--ink-soft);
 }
 
 .search-box button {
@@ -577,10 +663,10 @@ button {
   padding: 0 13px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.35);
+  background: var(--surface);
   cursor: pointer;
   font-size: 11px;
-  font-weight: 750;
+  font-weight: 560;
 }
 
 .category-chip .category-icon {
@@ -590,9 +676,9 @@ button {
 
 .category-chip.is-active {
   border-color: transparent;
-  background: var(--ink);
+  background: var(--primary);
   box-shadow: 0 7px 18px rgba(24, 63, 54, 0.13);
-  color: #fff;
+  color: var(--on-primary);
 }
 
 .category-chip.is-active .category-icon {
@@ -610,17 +696,18 @@ button {
 .section-heading {
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 13px;
+  margin-bottom: 16px;
 }
 
 .section-heading h2,
 .route-title-row h2,
 .empty-state h2 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
   font-size: 24px;
-  font-weight: 500;
-  letter-spacing: -0.025em;
+  font-weight: 540;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
 }
 
 .preset-grid {
@@ -639,7 +726,7 @@ button {
   padding: 16px;
   border: 0;
   border-radius: 20px;
-  background: var(--ink);
+  background: var(--primary);
   box-shadow: 0 10px 24px rgba(45, 44, 33, 0.11);
   color: #fff;
   cursor: pointer;
@@ -673,15 +760,17 @@ button {
 .preset-card .preset-index {
   margin-bottom: auto;
   opacity: 0.65;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-sans);
   font-size: 11px;
+  font-weight: 520;
 }
 
 .preset-card strong {
   margin-top: 18px;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 17px;
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 560;
+  letter-spacing: -0.018em;
 }
 
 .preset-card small {
@@ -713,7 +802,7 @@ button {
   color: var(--copper);
   cursor: pointer;
   font-size: 11px;
-  font-weight: 750;
+  font-weight: 600;
 }
 
 .event-list {
@@ -743,7 +832,7 @@ button {
 }
 
 .event-card.is-selected {
-  border-color: rgba(24, 63, 54, 0.45);
+  border-color: color-mix(in srgb, var(--copper) 54%, transparent);
   box-shadow: 0 8px 20px rgba(51, 47, 35, 0.07);
 }
 
@@ -764,10 +853,9 @@ button {
 
 .event-category {
   color: var(--ink-soft);
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 520;
+  letter-spacing: 0;
 }
 
 .select-stop {
@@ -785,9 +873,9 @@ button {
 }
 
 .select-stop.is-selected {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: #fff;
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--on-primary);
 }
 
 .calendar-stop {
@@ -798,8 +886,8 @@ button {
   place-items: center;
   border: 0;
   border-radius: 50%;
-  background: rgba(23, 107, 131, 0.1);
-  color: #176b83;
+  background: var(--info-bg);
+  color: var(--info);
   cursor: pointer;
 }
 
@@ -807,7 +895,7 @@ button {
   padding: 18px;
   border: 1px solid var(--line);
   border-radius: 22px;
-  background: rgba(255, 255, 255, 0.36);
+  background: var(--surface);
 }
 
 .start-options {
@@ -826,7 +914,7 @@ button {
   padding: 9px 10px;
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.45);
+  background: var(--surface-raised);
   cursor: pointer;
   text-align: left;
 }
@@ -852,9 +940,9 @@ button {
 }
 
 .start-options > button.is-active {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: white;
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--on-primary);
 }
 
 .start-options > button.is-active small {
@@ -869,7 +957,7 @@ button {
   padding-top: 11px;
   border-top: 1px solid var(--line);
   font-size: 12px;
-  font-weight: 750;
+  font-weight: 600;
 }
 
 .time-control input {
@@ -878,7 +966,7 @@ button {
   border-radius: 10px;
   background: var(--card);
   color: var(--ink);
-  font-weight: 750;
+  font-weight: 600;
 }
 
 .geo-message {
@@ -898,10 +986,10 @@ button {
   padding: 9px 12px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.4);
+  background: var(--surface);
   cursor: pointer;
   font-size: 10px;
-  font-weight: 750;
+  font-weight: 600;
 }
 
 .route-stats {
@@ -928,9 +1016,9 @@ button {
 }
 
 .route-stats strong {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 560;
 }
 
 .route-stats span {
@@ -941,16 +1029,16 @@ button {
 }
 
 .route-stats .stat-warning {
-  background: #f4ded6;
-  color: #8f3d2a;
+  background: var(--danger-bg);
+  color: var(--danger);
 }
 
 .route-notice {
   margin: 12px 0 0;
   padding: 11px 13px;
   border-radius: 13px;
-  background: rgba(216, 166, 55, 0.13);
-  color: #765918;
+  background: var(--notice-bg);
+  color: var(--notice);
   font-size: 10px;
   line-height: 1.45;
 }
@@ -958,7 +1046,7 @@ button {
 .button-calendar {
   width: 100%;
   margin-top: 12px;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--line);
   background: transparent;
 }
 
@@ -985,7 +1073,7 @@ button {
   bottom: -2px;
   left: 50%;
   width: 1px;
-  background: rgba(24, 63, 54, 0.23);
+  background: var(--line);
   content: "";
 }
 
@@ -1002,10 +1090,10 @@ button {
   place-items: center;
   border: 2px solid var(--paper);
   border-radius: 50%;
-  background: var(--ink);
-  color: white;
+  background: var(--primary);
+  color: var(--on-primary);
   font-size: 9px;
-  font-weight: 800;
+  font-weight: 650;
 }
 
 .timeline > li.is-late .timeline-rail span {
@@ -1017,7 +1105,7 @@ button {
   padding: 13px;
   border: 1px solid var(--line);
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--surface-raised);
 }
 
 .timeline-time {
@@ -1028,9 +1116,9 @@ button {
 }
 
 .timeline-time strong {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
   font-size: 19px;
-  font-weight: 500;
+  font-weight: 560;
 }
 
 .timeline-time span {
@@ -1046,15 +1134,15 @@ button {
   margin-top: 9px;
   padding: 5px 8px;
   border-radius: 999px;
-  background: rgba(23, 107, 131, 0.1);
-  color: #176b83;
+  background: var(--info-bg);
+  color: var(--info);
   font-size: 9px;
-  font-weight: 800;
+  font-weight: 650;
 }
 
 .schedule-badge.is-late {
-  background: #f4ded6;
-  color: #8f3d2a;
+  background: var(--danger-bg);
+  color: var(--danger);
 }
 
 .timeline-card > small {
@@ -1082,7 +1170,7 @@ button {
   place-items: center;
   border: 1px solid var(--line);
   border-radius: 44% 56% 47% 53%;
-  background: rgba(255, 255, 255, 0.42);
+  background: var(--surface);
   color: var(--copper);
   transform: rotate(-5deg);
 }
@@ -1113,7 +1201,7 @@ button {
 
 .site-footer a {
   color: var(--copper);
-  font-weight: 800;
+  font-weight: 600;
   text-decoration: none;
 }
 
@@ -1143,7 +1231,7 @@ button {
 @media (max-width: 760px) {
   body {
     background:
-      radial-gradient(circle at 10% 2%, rgba(255, 255, 255, 0.9), transparent 22rem),
+      radial-gradient(circle at 10% 2%, var(--ambient), transparent 22rem),
       var(--paper);
   }
 
@@ -1332,7 +1420,7 @@ button {
     padding: 6px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 22px;
-    background: color-mix(in srgb, var(--ink) 96%, transparent);
+    background: color-mix(in srgb, var(--primary) 96%, transparent);
     box-shadow: 0 14px 34px rgba(20, 43, 37, 0.34);
     backdrop-filter: blur(16px);
   }
@@ -1350,7 +1438,7 @@ button {
     color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
     font-size: 9px;
-    font-weight: 750;
+    font-weight: 600;
   }
 
   .mobile-nav button.is-active {

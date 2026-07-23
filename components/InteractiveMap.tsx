@@ -93,7 +93,7 @@ export function InteractiveMap({
                 left: `${stop.x}%`,
                 top: `${stop.y}%`,
                 "--marker-color": isSelected
-                  ? "var(--ink)"
+                  ? "var(--primary)"
                   : "var(--marker-default)",
               } as React.CSSProperties}
               onClick={(event) => {

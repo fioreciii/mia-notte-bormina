@@ -8,10 +8,12 @@ import {
   LocateFixed,
   Map as MapIcon,
   MapPin,
+  Moon,
   Navigation2,
   Route,
   Search,
   Sparkles,
+  Sun,
   X,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -41,6 +43,7 @@ import { InteractiveMap } from "./InteractiveMap";
 import { RoutePanel } from "./RoutePanel";
 
 type View = "map" | "discover" | "route";
+type Theme = "light" | "dark";
 type StartMode =
   | "auto"
   | "current"
@@ -57,6 +60,28 @@ const categories: Category[] = [
   "culture",
   "shopping",
 ];
+
+const themeLabels: Record<
+  Language,
+  Record<Theme, { label: string; action: string }>
+> = {
+  it: {
+    dark: { label: "Notte", action: "Passa alla modalità chiara" },
+    light: { label: "Chiaro", action: "Passa alla modalità notte" },
+  },
+  en: {
+    dark: { label: "Night", action: "Switch to light mode" },
+    light: { label: "Light", action: "Switch to night mode" },
+  },
+  es: {
+    dark: { label: "Noche", action: "Cambiar al modo claro" },
+    light: { label: "Claro", action: "Cambiar al modo noche" },
+  },
+  de: {
+    dark: { label: "Nacht", action: "Zum hellen Modus wechseln" },
+    light: { label: "Hell", action: "Zum Nachtmodus wechseln" },
+  },
+};
 
 const presetLabels: Record<
   Language,
@@ -113,6 +138,7 @@ export function NightPlanner() {
   const [shareDone, setShareDone] = useState(false);
   const [languageOpen, setLanguageOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  const [theme, setTheme] = useState<Theme>("dark");
 
   const t = ui[language];
 
@@ -123,6 +149,9 @@ export function NightPlanner() {
     const storedLanguage = localStorage.getItem(
       "notte-bormina-language",
     ) as Language | null;
+    const storedTheme = localStorage.getItem(
+      "notte-bormina-theme",
+    ) as Theme | null;
     const initial = urlStops.length
       ? urlStops
       : stored
@@ -156,8 +185,22 @@ export function NightPlanner() {
       const browserLanguage = navigator.language.slice(0, 2) as Language;
       if (languageLabels[browserLanguage]) setLanguage(browserLanguage);
     }
+    const initialTheme =
+      storedTheme === "light" || storedTheme === "dark"
+        ? storedTheme
+        : new Date().getHours() >= 18 ||
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+    setTheme(initialTheme);
+    document.documentElement.dataset.theme = initialTheme;
     setHydrated(true);
   }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    if (hydrated) localStorage.setItem("notte-bormina-theme", theme);
+  }, [theme, hydrated]);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -293,7 +336,7 @@ export function NightPlanner() {
   ];
 
   return (
-    <main className="app-shell">
+    <main className="app-shell" data-theme={theme}>
       <header className="site-header">
         <div className="brand">
           <span className="brand-mark">NB</span>
@@ -307,6 +350,18 @@ export function NightPlanner() {
             <CalendarDays size={15} />
             25.07.26
           </span>
+          <button
+            className="theme-toggle"
+            onClick={() =>
+              setTheme((current) => (current === "dark" ? "light" : "dark"))
+            }
+            aria-label={themeLabels[language][theme].action}
+            aria-pressed={theme === "dark"}
+            title={themeLabels[language][theme].action}
+          >
+            {theme === "dark" ? <Moon size={15} /> : <Sun size={15} />}
+            <span>{themeLabels[language][theme].label}</span>
+          </button>
           <div className="language-switcher">
             <button
               className="language-current"
