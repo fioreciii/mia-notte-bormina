@@ -40,6 +40,7 @@ import {
 import { CategoryIcon } from "./CategoryIcon";
 import { EventCard } from "./EventCard";
 import { InteractiveMap } from "./InteractiveMap";
+import { RouteMapPreview } from "./RouteMapPreview";
 import { RoutePanel } from "./RoutePanel";
 
 type View = "map" | "discover" | "route";
@@ -547,6 +548,18 @@ export function NightPlanner() {
           <section
             className={`mobile-view route-view ${view === "route" ? "is-visible" : ""}`}
           >
+            {route.steps.length > 0 && (
+              <RouteMapPreview
+                route={route}
+                startPoint={startPoint}
+                language={language}
+                onOpenMap={() => {
+                  setActiveEvent(undefined);
+                  setView("map");
+                }}
+              />
+            )}
+
             <div className="route-controls">
               <div className="section-heading">
                 <h2>
@@ -558,6 +571,11 @@ export function NightPlanner() {
                     {t.clear}
                   </button>
                 )}
+              </div>
+
+              <div className="start-explainer">
+                <strong>{t.startTitle}</strong>
+                <span>{t.startHelp}</span>
               </div>
 
               <div className="start-options">

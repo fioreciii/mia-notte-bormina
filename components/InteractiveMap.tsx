@@ -57,14 +57,15 @@ export function InteractiveMap({
           alt="Mappa illustrata del centro storico di Bormio"
         />
 
-        {routePath && (
+        {points.length > 1 && (
           <svg
             className="route-lines"
             viewBox="0 0 100 100"
             preserveAspectRatio="none"
             aria-hidden="true"
           >
-            <polyline points={routePath} />
+            <polyline className="route-line-halo" points={routePath} />
+            <polyline className="route-line-main" points={routePath} />
           </svg>
         )}
 
