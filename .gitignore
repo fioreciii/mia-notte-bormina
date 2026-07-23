@@ -1,0 +1,6 @@
+.next/
+node_modules/
+.codex-tmp/
+IMmNiH.pdf
+.DS_Store
+*.log
