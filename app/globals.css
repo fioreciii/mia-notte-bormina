@@ -92,7 +92,9 @@ body {
     var(--paper);
   color: var(--ink);
   font-family: var(--font-sans);
+  font-size: 16px;
   font-variation-settings: "wght" 400;
+  line-height: 1.45;
 }
 
 button,
@@ -224,13 +226,13 @@ input:focus-visible {
   display: flex;
   align-items: center;
   gap: 5px;
-  min-height: 38px;
+  min-height: 44px;
   padding: 0 12px;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--surface-raised);
   cursor: pointer;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 560;
 }
 
@@ -266,7 +268,7 @@ input:focus-visible {
   border-radius: 9px;
   background: transparent;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 560;
 }
 
@@ -290,7 +292,7 @@ input:focus-visible {
 .eyebrow {
   margin: 0 0 8px;
   color: var(--copper);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 520;
   letter-spacing: 0;
 }
@@ -349,7 +351,7 @@ input:focus-visible {
 
 .selection-pill span {
   color: var(--ink-soft);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .desktop-grid {
@@ -437,8 +439,8 @@ input:focus-visible {
   position: absolute;
   z-index: 4;
   display: grid;
-  width: clamp(21px, 2.25vw, 29px);
-  height: clamp(21px, 2.25vw, 29px);
+  width: clamp(25px, 2.4vw, 31px);
+  height: clamp(25px, 2.4vw, 31px);
   padding: 0;
   transform: translate(-50%, -50%);
   place-items: center;
@@ -448,7 +450,7 @@ input:focus-visible {
   box-shadow: 0 3px 8px rgba(31, 43, 38, 0.2);
   color: var(--on-primary);
   cursor: pointer;
-  font-size: clamp(8px, 0.72vw, 11px);
+  font-size: clamp(10px, 0.82vw, 12px);
   font-weight: 650;
   line-height: 1;
   transition:
@@ -490,7 +492,7 @@ input:focus-visible {
   border-top: 1px solid var(--line);
   background: var(--surface-solid);
   color: var(--ink-soft);
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .map-footer span:last-child {
@@ -514,7 +516,7 @@ input:focus-visible {
   background: var(--primary);
   box-shadow: var(--shadow);
   color: var(--on-primary);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   line-height: 1.2;
 }
@@ -542,8 +544,8 @@ input:focus-visible {
 
 .icon-button {
   display: grid;
-  width: 30px;
-  height: 30px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   place-items: center;
   border: 0;
@@ -554,7 +556,7 @@ input:focus-visible {
 
 .event-number {
   color: var(--copper);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0;
 }
@@ -578,7 +580,7 @@ input:focus-visible {
 .event-card-heading h3 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 560;
   letter-spacing: -0.015em;
   line-height: 1.2;
@@ -587,27 +589,27 @@ input:focus-visible {
 .event-card-heading p {
   margin: 4px 0 0;
   color: var(--ink-soft);
-  font-size: 11px;
-  line-height: 1.3;
+  font-size: 13px;
+  line-height: 1.4;
 }
 
 .time-row {
   gap: 6px;
   margin-top: 11px;
   color: var(--copper);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
 }
 
 .button {
-  min-height: 42px;
+  min-height: 44px;
   justify-content: center;
   gap: 8px;
   padding: 0 17px;
   border: 0;
   border-radius: 999px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -632,7 +634,7 @@ input:focus-visible {
 
 .search-box {
   display: flex;
-  min-height: 48px;
+  min-height: 52px;
   align-items: center;
   gap: 10px;
   padding: 0 15px;
@@ -650,13 +652,14 @@ input:focus-visible {
 }
 
 .search-box input {
+  min-height: 50px;
   min-width: 0;
   flex: 1;
   border: 0;
   outline: 0;
   background: transparent;
   color: var(--ink);
-  font-size: 13px;
+  font-size: 16px;
 }
 
 .search-box input::placeholder {
@@ -665,8 +668,8 @@ input:focus-visible {
 
 .search-box button {
   display: grid;
-  width: 27px;
-  height: 27px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   place-items: center;
   border: 0;
@@ -689,7 +692,7 @@ input:focus-visible {
 
 .category-chip {
   display: flex;
-  min-height: 39px;
+  min-height: 44px;
   flex: 0 0 auto;
   align-items: center;
   gap: 7px;
@@ -698,7 +701,7 @@ input:focus-visible {
   border-radius: 999px;
   background: var(--surface);
   cursor: pointer;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 560;
 }
 
@@ -741,7 +744,7 @@ input:focus-visible {
 .empty-state h2 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 540;
   letter-spacing: -0.03em;
   line-height: 1.04;
@@ -792,7 +795,7 @@ input:focus-visible {
 
 .preset-card strong {
   font-family: var(--font-display);
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 560;
   letter-spacing: -0.018em;
   line-height: 1.05;
@@ -801,8 +804,8 @@ input:focus-visible {
 .preset-card small {
   margin-top: 5px;
   color: var(--ink-soft);
-  font-size: 11px;
-  line-height: 1.25;
+  font-size: 13px;
+  line-height: 1.35;
 }
 
 .preset-card .preset-route {
@@ -820,12 +823,14 @@ input:focus-visible {
 
 .list-actions button,
 .text-button {
-  padding: 0;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 4px;
   border: 0;
   background: transparent;
   color: var(--copper);
   cursor: pointer;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
 }
 
@@ -839,7 +844,7 @@ input:focus-visible {
 .event-card {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 44px;
+  grid-template-columns: minmax(0, 1fr) 54px;
   border: 0;
   background: transparent;
   transition:
@@ -866,7 +871,7 @@ input:focus-visible {
 
 .event-card-main {
   min-width: 0;
-  padding: 14px 12px 14px 15px;
+  padding: 16px 12px 16px 16px;
   border: 0;
   background: transparent;
   cursor: pointer;
@@ -881,15 +886,15 @@ input:focus-visible {
 
 .event-category {
   color: var(--ink-soft);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 520;
   letter-spacing: 0;
 }
 
 .select-stop {
   display: grid;
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   align-self: center;
   justify-self: center;
   padding: 0;
@@ -908,8 +913,8 @@ input:focus-visible {
 
 .calendar-stop {
   display: grid;
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   place-items: center;
   border: 0;
@@ -935,15 +940,15 @@ input:focus-visible {
 
 .start-explainer strong {
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 560;
   letter-spacing: -0.015em;
 }
 
 .start-explainer span {
   color: var(--ink-soft);
-  font-size: 10px;
-  line-height: 1.35;
+  font-size: 13px;
+  line-height: 1.45;
 }
 
 .start-options {
@@ -976,7 +981,7 @@ input:focus-visible {
 
 .start-options strong {
   overflow: hidden;
-  font-size: 11px;
+  font-size: 13px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -984,7 +989,7 @@ input:focus-visible {
 .start-options small {
   margin-top: 2px;
   color: var(--ink-soft);
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .start-options > button.is-active {
@@ -994,7 +999,7 @@ input:focus-visible {
 }
 
 .start-options > button.is-active small {
-  color: rgba(255, 255, 255, 0.68);
+  color: rgba(255, 255, 255, 0.84);
 }
 
 .time-control {
@@ -1004,23 +1009,25 @@ input:focus-visible {
   margin-top: 11px;
   padding-top: 11px;
   border-top: 1px solid var(--line);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
 }
 
 .time-control input {
+  min-height: 44px;
   padding: 7px 10px;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--card);
   color: var(--ink);
+  font-size: 16px;
   font-weight: 600;
 }
 
 .geo-message {
   margin: 10px 0 0;
   color: var(--copper);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.4;
 }
 
@@ -1031,12 +1038,13 @@ input:focus-visible {
 
 .round-action {
   gap: 7px;
+  min-height: 44px;
   padding: 9px 12px;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--surface);
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -1072,8 +1080,8 @@ input:focus-visible {
 .route-stats span {
   margin-top: 2px;
   color: var(--ink-soft);
-  font-size: 9px;
-  line-height: 1.25;
+  font-size: 12px;
+  line-height: 1.35;
 }
 
 .route-stats .stat-warning {
@@ -1087,7 +1095,7 @@ input:focus-visible {
   border-radius: 13px;
   background: var(--notice-bg);
   color: var(--notice);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.45;
 }
 
@@ -1133,14 +1141,14 @@ input:focus-visible {
   position: relative;
   z-index: 1;
   display: grid;
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   place-items: center;
   border: 2px solid var(--paper);
   border-radius: 50%;
   background: var(--primary);
   color: var(--on-primary);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 650;
 }
 
@@ -1172,7 +1180,7 @@ input:focus-visible {
 .timeline-time span {
   gap: 4px;
   color: var(--ink-soft);
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .schedule-badge {
@@ -1184,7 +1192,7 @@ input:focus-visible {
   border-radius: 999px;
   background: var(--info-bg);
   color: var(--info);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 650;
 }
 
@@ -1197,7 +1205,7 @@ input:focus-visible {
   display: block;
   margin-top: 6px;
   color: var(--ink-soft);
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .empty-state {
@@ -1231,7 +1239,7 @@ input:focus-visible {
   max-width: 350px;
   margin: 10px 0 18px;
   color: var(--ink-soft);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -1244,10 +1252,13 @@ input:focus-visible {
   padding: 22px 2px 28px;
   border-top: 1px solid var(--line);
   color: var(--ink-soft);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .site-footer a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
   color: var(--copper);
   font-weight: 600;
   text-decoration: none;
@@ -1316,7 +1327,7 @@ input:focus-visible {
   .hero-copy > p:last-child {
     max-width: 280px;
     margin-top: 13px;
-    font-size: 13px;
+    font-size: 15px;
   }
 
   .selection-pill {
@@ -1333,7 +1344,7 @@ input:focus-visible {
   }
 
   .selection-pill span {
-    font-size: 8px;
+    font-size: 11px;
   }
 
   .desktop-grid {
@@ -1370,7 +1381,7 @@ input:focus-visible {
   }
 
   .map-footer {
-    font-size: 9px;
+    font-size: 11px;
   }
 
   .map-popover {
@@ -1406,7 +1417,7 @@ input:focus-visible {
   .route-map-preview-heading p {
     margin: 0 0 2px;
     color: var(--copper);
-    font-size: 9px;
+    font-size: 11px;
     font-weight: 650;
   }
 
@@ -1421,7 +1432,7 @@ input:focus-visible {
 
   .route-map-preview-heading button {
     display: flex;
-    min-height: 40px;
+    min-height: 44px;
     flex: 0 0 auto;
     align-items: center;
     gap: 6px;
@@ -1431,7 +1442,7 @@ input:focus-visible {
     background: var(--surface-raised);
     color: var(--ink);
     cursor: pointer;
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 650;
   }
 
@@ -1464,8 +1475,8 @@ input:focus-visible {
     position: absolute;
     z-index: 5;
     display: grid;
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     transform: translate(-50%, -50%);
     place-items: center;
     border: 2px solid var(--on-primary);
@@ -1473,14 +1484,14 @@ input:focus-visible {
     background: var(--primary);
     box-shadow: 0 3px 8px rgba(18, 30, 27, 0.32);
     color: var(--on-primary);
-    font-size: 9px;
+    font-size: 11px;
     font-weight: 700;
     line-height: 1;
   }
 
   .route-preview-start {
-    width: 25px;
-    height: 25px;
+    width: 28px;
+    height: 28px;
   }
 
   .toolbar {
@@ -1494,7 +1505,7 @@ input:focus-visible {
   .section-heading h2,
   .route-title-row h2,
   .empty-state h2 {
-    font-size: 22px;
+    font-size: 24px;
   }
 
   .preset-grid {
@@ -1511,7 +1522,7 @@ input:focus-visible {
   }
 
   .start-options > button {
-    min-height: 72px;
+    min-height: 84px;
     flex-direction: column;
     justify-content: center;
     gap: 5px;
@@ -1526,8 +1537,8 @@ input:focus-visible {
 
   .start-options strong {
     overflow: visible;
-    font-size: 9px;
-    line-height: 1.15;
+    font-size: 12px;
+    line-height: 1.2;
     text-overflow: clip;
     white-space: normal;
   }
@@ -1556,7 +1567,7 @@ input:focus-visible {
     bottom: max(10px, env(safe-area-inset-bottom));
     left: 12px;
     display: grid;
-    min-height: 66px;
+    min-height: 72px;
     grid-template-columns: repeat(3, 1fr);
     padding: 6px;
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1576,9 +1587,9 @@ input:focus-visible {
     border: 0;
     border-radius: 16px;
     background: transparent;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.8);
     cursor: pointer;
-    font-size: 9px;
+    font-size: 11px;
     font-weight: 600;
   }
 
@@ -1599,7 +1610,7 @@ input:focus-visible {
     border-radius: 999px;
     background: var(--copper);
     color: var(--on-primary);
-    font-size: 8px;
+    font-size: 10px;
   }
 }
 
