@@ -32,7 +32,6 @@
   --surface: #292d28;
   --surface-raised: #34382f;
   --surface-solid: #292d28;
-  --ambient: rgba(208, 58, 25, 0.1);
   --map-frame: #292d28;
   --info: #bfe0cf;
   --info-bg: rgba(191, 224, 207, 0.12);
@@ -69,7 +68,6 @@
   --surface: #fffdf7;
   --surface-raised: #f2f1e7;
   --surface-solid: #fffdf7;
-  --ambient: rgba(228, 35, 19, 0.075);
   --map-frame: #fffdf7;
   --info: #3c665c;
   --info-bg: #dceae2;
@@ -96,9 +94,7 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background:
-    radial-gradient(circle at 12% 3%, var(--ambient), transparent 28rem),
-    var(--paper);
+  background: var(--paper);
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: 16px;
@@ -1821,9 +1817,7 @@ input:focus-visible {
 
 @media (max-width: 760px) {
   body {
-    background:
-      radial-gradient(circle at 10% 2%, var(--ambient), transparent 22rem),
-      var(--paper);
+    background: var(--paper);
   }
 
   .app-shell {
