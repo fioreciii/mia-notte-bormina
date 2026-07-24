@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    "https://mia-notte-bormina.hybridfiore.chatgpt.site",
-  ),
+  metadataBase: new URL("https://bormio.vercel.app"),
   title: "La mia Notte Bormina",
   description:
     "Scegli le tue tappe e crea il percorso perfetto per la Notte Bormina 2026.",
@@ -48,7 +47,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="it">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
