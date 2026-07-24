@@ -842,14 +842,22 @@ export function NightPlanner() {
       </div>
 
       <footer className="site-footer">
-        <span>{t.unofficial}</span>
-        <a
-          href="https://www.bormio.eu/it/eventi/experience/notte-bormina"
-          target="_blank"
-          rel="noreferrer"
-        >
-          bormio.eu
-        </a>
+        <div className="footer-source">
+          <span>{t.unofficial}</span>
+          <a
+            href="https://www.bormio.eu/it/eventi/experience/notte-bormina"
+            target="_blank"
+            rel="noreferrer"
+          >
+            bormio.eu
+          </a>
+        </div>
+        <div className="footer-signature">
+          <span>{t.madeWithLove}</span>
+          <a href="mailto:fioreci.works@gmail.com">
+            fioreci.works@gmail.com
+          </a>
+        </div>
       </footer>
 
       <nav className="mobile-nav" aria-label="Navigazione principale">
