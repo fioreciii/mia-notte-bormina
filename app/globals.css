@@ -155,7 +155,9 @@ input:focus-visible {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin-inline: -28px;
   min-height: 76px;
+  padding-inline: 28px;
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--paper) 91%, transparent);
   backdrop-filter: blur(18px);
@@ -1259,6 +1261,11 @@ input:focus-visible {
     padding: 0 18px;
   }
 
+  .site-header {
+    margin-inline: -18px;
+    padding-inline: 18px;
+  }
+
   .desktop-grid {
     grid-template-columns: minmax(0, 1fr) minmax(340px, 0.9fr);
     gap: 18px;
@@ -1279,7 +1286,9 @@ input:focus-visible {
   }
 
   .site-header {
+    margin-inline: -14px;
     min-height: 64px;
+    padding-inline: 14px;
   }
 
   .event-date {
