@@ -158,14 +158,13 @@ input:focus-visible {
   top: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   min-height: 76px;
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--paper) 91%, transparent);
   backdrop-filter: blur(18px);
 }
 
-.brand,
 .header-actions,
 .event-date,
 .event-card-heading,
@@ -178,44 +177,6 @@ input:focus-visible {
 .timeline-time span {
   display: flex;
   align-items: center;
-}
-
-.brand {
-  gap: 11px;
-}
-
-.brand-mark {
-  display: grid;
-  width: 39px;
-  height: 39px;
-  place-items: center;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 560;
-  letter-spacing: -0.01em;
-}
-
-.brand > div {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.02;
-}
-
-.brand span:not(.brand-mark) {
-  color: var(--copper);
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-style: oblique 12deg;
-  font-weight: 430;
-}
-
-.brand strong {
-  font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 560;
-  letter-spacing: -0.018em;
 }
 
 .header-actions {
@@ -1325,20 +1286,6 @@ input:focus-visible {
 
   .site-header {
     min-height: 64px;
-  }
-
-  .brand-mark {
-    width: 34px;
-    height: 34px;
-    font-size: 11px;
-  }
-
-  .brand span:not(.brand-mark) {
-    font-size: 13px;
-  }
-
-  .brand strong {
-    font-size: 15px;
   }
 
   .event-date {

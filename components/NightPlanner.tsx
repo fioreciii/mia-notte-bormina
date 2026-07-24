@@ -346,13 +346,6 @@ export function NightPlanner() {
   return (
     <main className="app-shell" data-theme={theme}>
       <header className="site-header">
-        <div className="brand">
-          <span className="brand-mark">NB</span>
-          <div>
-            <span>{t.titleA}</span>
-            <strong>{t.titleB}</strong>
-          </div>
-        </div>
         <div className="header-actions">
           <span className="event-date">
             <CalendarDays size={15} />
