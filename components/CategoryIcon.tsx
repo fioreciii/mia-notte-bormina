@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Baby,
   Drama,
@@ -6,6 +8,7 @@ import {
   ShoppingBag,
   UtensilsCrossed,
 } from "lucide-react";
+import { useState } from "react";
 import { Category, categoryMeta } from "@/lib/events";
 
 const icons = {
@@ -25,13 +28,27 @@ export function CategoryIcon({
   size?: number;
 }) {
   const Icon = icons[category];
+  const [assetFailed, setAssetFailed] = useState(false);
+
   return (
     <span
       className="category-icon"
       style={{ "--category-color": categoryMeta[category].color } as React.CSSProperties}
       aria-hidden="true"
     >
-      <Icon size={size} strokeWidth={1.9} />
+      {assetFailed ? (
+        <Icon size={size} strokeWidth={1.9} />
+      ) : (
+        // These small authored SVGs are served directly so their palette remains intact.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={categoryMeta[category].asset}
+          alt=""
+          width={size}
+          height={size}
+          onError={() => setAssetFailed(true)}
+        />
+      )}
     </span>
   );
 }

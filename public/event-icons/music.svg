@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Musica — fisarmonica">
+  <g class="mu">
+    <g class="mu-acc">
+      <rect x="40" y="66" width="40" height="108" rx="12" fill="#397b6e"></rect>
+      <circle class="mu-btn" cx="60" cy="90" r="6.5" fill="#af1c0e"></circle>
+      <circle class="mu-btn2" cx="60" cy="112" r="6.5" fill="#cbb85f"></circle>
+      <circle class="mu-btn" cx="60" cy="134" r="6.5" fill="#e8ecd9"></circle>
+      <rect x="80" y="72" width="80" height="96" fill="#e8ecd9"></rect>
+      <g stroke="#397b6e" stroke-width="6">
+        <path d="M92 72v96M108 72v96M124 72v96M140 72v96M156 72v96"></path>
+      </g>
+      <rect x="160" y="66" width="40" height="108" rx="12" fill="#5d6f31"></rect>
+      <rect x="176" y="84" width="12" height="72" rx="6" fill="#e8ecd9"></rect>
+    </g>
+  </g>
+</svg>

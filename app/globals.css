@@ -590,6 +590,13 @@ input:focus-visible {
   color: var(--category-color);
 }
 
+.category-icon img {
+  display: block;
+  width: 86%;
+  height: 86%;
+  object-fit: contain;
+}
+
 :root[data-theme="dark"] .category-icon {
   background: color-mix(in srgb, var(--category-color) 18%, transparent);
   color: color-mix(in srgb, var(--category-color) 68%, var(--ink));

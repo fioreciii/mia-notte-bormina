@@ -35,37 +35,37 @@ export const categoryMeta: Record<
     label: "Gusto",
     short: "Gusto",
     color: "#af1c0e",
-    asset: "/event-icons/food.webp",
+    asset: "/event-icons/food.svg",
   },
   music: {
     label: "Musica",
     short: "Musica",
     color: "#397b6e",
-    asset: "/event-icons/music.webp",
+    asset: "/event-icons/music.svg",
   },
   show: {
     label: "Spettacoli",
     short: "Show",
     color: "#d03a19",
-    asset: "/event-icons/show.webp",
+    asset: "/event-icons/show.svg",
   },
   kids: {
     label: "Bambini",
     short: "Kids",
     color: "#5d6f31",
-    asset: "/event-icons/kids.webp",
+    asset: "/event-icons/kids.svg",
   },
   culture: {
     label: "Arte e tradizione",
     short: "Cultura",
     color: "#7d9244",
-    asset: "/event-icons/culture.webp",
+    asset: "/event-icons/culture.svg",
   },
   shopping: {
     label: "Shopping",
     short: "Shopping",
     color: "#6f648f",
-    asset: "/event-icons/shopping.webp",
+    asset: "/event-icons/shopping.svg",
   },
 };
 

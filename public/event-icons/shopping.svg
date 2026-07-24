@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Shopping — mazzo regalo">
+  <g class="so">
+    <g stroke="#5d6f31" stroke-width="6" stroke-linecap="round" fill="none">
+      <path d="M120 150 92 104"></path>
+      <path d="M120 150l32-52"></path>
+      <path d="M120 150V92"></path>
+    </g>
+    <path d="M78 148h84l-10 44a14 14 0 0 1-14 12h-36a14 14 0 0 1-14-12Z" fill="#a9a1df"></path>
+    <rect x="72" y="140" width="96" height="18" rx="9" fill="#232324"></rect>
+    <g class="so-fl1">
+      <circle cx="88" cy="96" r="18" fill="#7d9244"></circle>
+      <circle cx="88" cy="96" r="7" fill="#fff8eb"></circle>
+    </g>
+    <g class="so-fl2">
+      <circle cx="152" cy="92" r="16" fill="#af1c0e"></circle>
+      <circle cx="152" cy="92" r="6" fill="#fff8eb"></circle>
+    </g>
+    <g class="so-fl3">
+      <circle cx="120" cy="76" r="20" fill="#cbb85f"></circle>
+      <circle cx="120" cy="76" r="8" fill="#232324"></circle>
+    </g>
+  </g>
+</svg>

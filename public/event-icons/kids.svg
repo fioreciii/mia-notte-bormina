@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Bambini — altalena">
+  <g class="ki">
+    <path d="M64 190h112" fill="none" stroke="#c8b79a" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M120 122 92 186h56Z" fill="#5d6f31"></path>
+    <g class="ki-plank">
+      <rect x="42" y="124" width="156" height="18" rx="9" fill="#af1c0e"></rect>
+      <circle cx="54" cy="104" r="18" fill="#a9a1df"></circle>
+      <circle cx="54" cy="104" r="7" fill="#fff8eb"></circle>
+      <circle cx="186" cy="104" r="18" fill="#cbb85f"></circle>
+      <circle cx="186" cy="104" r="7" fill="#232324"></circle>
+    </g>
+    <circle cx="120" cy="133" r="7" fill="#232324"></circle>
+  </g>
+</svg>

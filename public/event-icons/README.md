@@ -1,13 +1,14 @@
-# Procreate event illustrations
+# Event illustrations
 
-Export transparent WebP or PNG files at 512 × 512 px using these names:
+The six category illustrations are authored as transparent SVG files with a
+shared `0 0 240 240` viewBox:
 
-- `food.webp`
-- `music.webp`
-- `show.webp`
-- `kids.webp`
-- `culture.webp`
-- `shopping.webp`
+- `food.svg`
+- `music.svg`
+- `show.svg`
+- `kids.svg`
+- `culture.svg`
+- `shopping.svg`
 
-Keep the important drawing inside the central 80% so it remains legible in
-small cards and map markers.
+`CategoryIcon` uses these assets throughout the interface and falls back to the
+previous Lucide icons if an SVG cannot be loaded.

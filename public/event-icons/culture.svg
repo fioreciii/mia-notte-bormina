@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Arte e tradizione — gomitolo di lana">
+  <g class="cu">
+    <g class="cu-needle">
+      <path d="M58 178 176 66" stroke="#c8b79a" stroke-width="9" stroke-linecap="round"></path>
+      <path d="M64 66 182 178" stroke="#c8b79a" stroke-width="9" stroke-linecap="round"></path>
+      <circle cx="176" cy="66" r="9" fill="#232324"></circle>
+      <circle cx="182" cy="178" r="9" fill="#232324"></circle>
+    </g>
+    <g class="cu-ball">
+      <circle cx="118" cy="128" r="58" fill="#7d9244"></circle>
+    </g>
+  </g>
+</svg>

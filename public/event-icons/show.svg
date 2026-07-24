@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Spettacoli — scoppio di fuochi">
+  <g class="sh">
+    <g class="sh-burst">
+      <g class="sh-rot">
+        <g id="sh-ray">
+          <path d="M120 120 116 44a4 4 0 0 1 8 0Z" fill="#d03a19"></path>
+        </g>
+        <use href="#sh-ray" transform="rotate(45 120 120)"></use>
+        <use href="#sh-ray" transform="rotate(90 120 120)" fill="#a9a1df"></use>
+        <use href="#sh-ray" transform="rotate(135 120 120)"></use>
+        <use href="#sh-ray" transform="rotate(180 120 120)"></use>
+        <use href="#sh-ray" transform="rotate(225 120 120)"></use>
+        <use href="#sh-ray" transform="rotate(270 120 120)"></use>
+        <use href="#sh-ray" transform="rotate(315 120 120)"></use>
+        <g id="sh-ray2">
+          <path d="M120 120 112 66a8 8 0 0 1 16 0Z" fill="#a9a1df"></path>
+        </g>
+        <use href="#sh-ray2" transform="rotate(90 120 120)"></use>
+        <use href="#sh-ray2" transform="rotate(180 120 120)"></use>
+        <use href="#sh-ray2" transform="rotate(270 120 120)"></use>
+      </g>
+      <circle cx="120" cy="120" r="30" fill="#af1c0e"></circle>
+      <g class="sh-core">
+        <circle cx="120" cy="120" r="14" fill="#cbb85f"></circle>
+      </g>
+    </g>
+    <circle class="sh-sp" cx="52" cy="60" r="6" fill="#a9a1df"></circle>
+    <circle class="sh-sp2" cx="192" cy="72" r="5" fill="#d03a19"></circle>
+    <circle class="sh-sp" cx="188" cy="186" r="6" fill="#cbb85f"></circle>
+    <circle class="sh-sp2" cx="54" cy="180" r="5" fill="#a9a1df"></circle>
+  </g>
+</svg>
