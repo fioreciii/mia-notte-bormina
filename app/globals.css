@@ -358,14 +358,33 @@ input:focus-visible {
   box-shadow: var(--shadow);
 }
 
-.map-canvas {
+.map-frame {
   position: relative;
   overflow: hidden;
+}
+
+.map-canvas {
+  position: relative;
+  overflow: auto;
   width: 100%;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  touch-action: pan-x pan-y;
   line-height: 0;
 }
 
-.map-canvas.is-picking {
+.map-canvas::-webkit-scrollbar {
+  display: none;
+}
+
+.map-stage {
+  position: relative;
+  min-width: 100%;
+  line-height: 0;
+}
+
+.map-canvas.is-picking .map-stage {
   cursor: crosshair;
 }
 
@@ -378,6 +397,48 @@ input:focus-visible {
 
 :root[data-theme="dark"] .map-image {
   filter: brightness(0.86) saturate(0.88);
+}
+
+.map-zoom-controls {
+  position: absolute;
+  z-index: 25;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  overflow: hidden;
+  grid-template-columns: repeat(3, 44px);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-solid) 94%, transparent);
+  box-shadow: 0 6px 18px rgba(35, 35, 36, 0.18);
+  backdrop-filter: blur(12px);
+}
+
+.map-zoom-controls button {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.map-zoom-controls button + button {
+  border-left: 1px solid var(--line);
+}
+
+.map-zoom-controls button:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+.map-zoom-controls .map-zoom-level {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 680;
 }
 
 .route-lines {
@@ -428,6 +489,13 @@ input:focus-visible {
   transition:
     transform 160ms ease,
     background 160ms ease;
+}
+
+.map-marker::after {
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  content: "";
 }
 
 .map-marker:hover,
@@ -1759,13 +1827,13 @@ input:focus-visible {
   }
 
   .map-popover {
-    position: sticky;
-    right: auto;
-    bottom: 8px;
+    position: absolute;
+    top: 64px;
+    right: 8px;
+    bottom: auto;
     left: 8px;
-    width: calc(100% - 16px);
-    margin-top: -172px;
-    margin-bottom: 8px;
+    width: auto;
+    margin: 0;
   }
 
   .route-map-preview {
