@@ -1,0 +1,1113 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Segnaletica Alpina — Paleta para Bormio</title>
+    <style>
+      @font-face {
+        font-family: "Arizona Mix";
+        src: url("../public/fonts/arizona-mix.woff2") format("woff2");
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Arizona Sans";
+        src: url("../public/fonts/arizona-sans.woff2") format("woff2");
+        font-display: swap;
+      }
+
+      :root {
+        color-scheme: light;
+        --page: #f7f5ec;
+        --surface: #fffdf7;
+        --surface-subtle: #e8ecd9;
+        --surface-raised: #ffffff;
+        --ink: #232324;
+        --ink-muted: #5d625a;
+        --primary: #af1c0e;
+        --primary-hover: #8f160b;
+        --secondary: #5d6f31;
+        --aqua: #bfe0cf;
+        --line: #c8cbbe;
+        --focus: #d03a19;
+        --on-primary: #fff8eb;
+        --shadow: 0 18px 50px rgb(35 35 36 / 8%);
+        --grid: rgb(35 35 36 / 8%);
+      }
+
+      html[data-theme="dark"] {
+        color-scheme: dark;
+        --page: #20231f;
+        --surface: #292d28;
+        --surface-subtle: #34382f;
+        --surface-raised: #30342e;
+        --ink: #f8f6ed;
+        --ink-muted: #c2cabf;
+        --primary: #d03a19;
+        --primary-hover: #e04b2b;
+        --secondary: #afc46d;
+        --aqua: #bfe0cf;
+        --line: #4d524a;
+        --focus: #ff8063;
+        --on-primary: #fff8eb;
+        --shadow: 0 22px 60px rgb(0 0 0 / 22%);
+        --grid: rgb(248 246 237 / 8%);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background:
+          linear-gradient(90deg, transparent 0 calc(100% - 1px), var(--grid) calc(100% - 1px)) 0 0 / 64px 64px,
+          linear-gradient(0deg, transparent 0 calc(100% - 1px), var(--grid) calc(100% - 1px)) 0 0 / 64px 64px,
+          var(--page);
+        color: var(--ink);
+        font-family: "Arizona Sans", ui-sans-serif, system-ui, sans-serif;
+        font-size: 16px;
+        line-height: 1.45;
+        transition: background-color 180ms ease, color 180ms ease;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      button:focus-visible {
+        outline: 3px solid var(--focus);
+        outline-offset: 3px;
+      }
+
+      .shell {
+        width: min(1180px, calc(100% - 32px));
+        margin-inline: auto;
+        padding-block: 20px 72px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 52px;
+        margin-bottom: clamp(56px, 8vw, 108px);
+      }
+
+      .wordmark {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ink);
+        font-size: 0.78rem;
+        font-weight: 650;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .wordmark-mark {
+        position: relative;
+        width: 22px;
+        height: 22px;
+        border: 1px solid currentColor;
+        border-radius: 50%;
+      }
+
+      .wordmark-mark::before,
+      .wordmark-mark::after {
+        position: absolute;
+        inset: 50% auto auto 50%;
+        width: 1px;
+        height: 28px;
+        background: currentColor;
+        content: "";
+        transform: translate(-50%, -50%);
+      }
+
+      .wordmark-mark::after {
+        transform: translate(-50%, -50%) rotate(90deg);
+      }
+
+      .theme-switch {
+        display: inline-grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3px;
+        min-height: 44px;
+        padding: 3px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--surface);
+      }
+
+      .theme-option {
+        min-width: 68px;
+        min-height: 36px;
+        padding: 6px 13px;
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--ink-muted);
+        cursor: pointer;
+        font-size: 0.88rem;
+      }
+
+      .theme-option[aria-pressed="true"] {
+        background: var(--ink);
+        color: var(--page);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.55fr);
+        gap: clamp(32px, 8vw, 104px);
+        align-items: end;
+        padding-bottom: clamp(64px, 10vw, 128px);
+      }
+
+      .eyebrow,
+      .section-index {
+        margin: 0 0 20px;
+        color: var(--primary);
+        font-size: 0.78rem;
+        font-weight: 680;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 850px;
+        margin-bottom: 24px;
+        font-family: "Arizona Mix", Georgia, serif;
+        font-size: clamp(3.45rem, 9vw, 7.9rem);
+        font-weight: 400;
+        letter-spacing: -0.065em;
+        line-height: 0.82;
+      }
+
+      .hero-copy {
+        max-width: 640px;
+        margin-bottom: 0;
+        color: var(--ink-muted);
+        font-size: clamp(1.06rem, 1.6vw, 1.28rem);
+      }
+
+      .ratio-card {
+        border-top: 1px solid var(--line);
+        padding-top: 18px;
+      }
+
+      .ratio-card p {
+        margin-bottom: 15px;
+        color: var(--ink-muted);
+        font-size: 0.92rem;
+      }
+
+      .ratio-bar {
+        display: grid;
+        grid-template-columns: 6fr 3fr 1fr;
+        height: 18px;
+        overflow: hidden;
+        border-radius: 999px;
+      }
+
+      .ratio-bar span:nth-child(1) {
+        background: var(--surface);
+      }
+
+      .ratio-bar span:nth-child(2) {
+        background: var(--secondary);
+      }
+
+      .ratio-bar span:nth-child(3) {
+        background: var(--primary);
+      }
+
+      .ratio-labels {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 9px;
+        color: var(--ink-muted);
+        font-size: 0.72rem;
+      }
+
+      .section {
+        padding-block: clamp(48px, 7vw, 88px);
+        border-top: 1px solid var(--line);
+      }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 0.55fr);
+        gap: 32px;
+        align-items: end;
+        margin-bottom: 32px;
+      }
+
+      h2 {
+        margin-bottom: 0;
+        font-family: "Arizona Mix", Georgia, serif;
+        font-size: clamp(2.4rem, 5vw, 4.8rem);
+        font-weight: 400;
+        letter-spacing: -0.045em;
+        line-height: 0.94;
+      }
+
+      .section-note {
+        margin-bottom: 3px;
+        color: var(--ink-muted);
+        font-size: 0.96rem;
+      }
+
+      .swatch-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: var(--line);
+      }
+
+      .swatch {
+        position: relative;
+        min-height: 210px;
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+        background: var(--swatch);
+        color: var(--swatch-ink);
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .swatch::after {
+        position: absolute;
+        inset: auto 16px 16px;
+        display: block;
+        padding: 13px 14px 12px;
+        border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+        border-radius: 13px;
+        background: color-mix(in srgb, var(--swatch) 83%, transparent);
+        backdrop-filter: blur(8px);
+        content: "";
+      }
+
+      .swatch-label {
+        position: absolute;
+        z-index: 1;
+        inset: auto 30px 53px;
+        font-size: 0.93rem;
+        font-weight: 650;
+      }
+
+      .swatch-hex {
+        position: absolute;
+        z-index: 1;
+        inset: auto 30px 31px;
+        font-size: 0.79rem;
+        letter-spacing: 0.04em;
+        opacity: 0.78;
+      }
+
+      .swatch-hint {
+        position: absolute;
+        z-index: 1;
+        top: 16px;
+        right: 16px;
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+        border-radius: 50%;
+        font-size: 1rem;
+        opacity: 0;
+        transition: opacity 140ms ease;
+      }
+
+      .swatch:hover .swatch-hint,
+      .swatch:focus-visible .swatch-hint {
+        opacity: 1;
+      }
+
+      .token-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .token {
+        display: grid;
+        grid-template-columns: 64px minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: center;
+        min-height: 86px;
+        padding: 11px 18px 11px 11px;
+        border: 1px solid var(--line);
+        border-radius: 17px;
+        background: var(--surface);
+      }
+
+      .token-color {
+        align-self: stretch;
+        min-height: 62px;
+        border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+        border-radius: 11px;
+        background: var(--token);
+      }
+
+      .token-name {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 0.95rem;
+        font-weight: 650;
+      }
+
+      .token-use {
+        display: block;
+        color: var(--ink-muted);
+        font-size: 0.79rem;
+      }
+
+      .token-code {
+        color: var(--ink-muted);
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+      }
+
+      .components-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 18px;
+      }
+
+      .sample {
+        min-width: 0;
+        padding: clamp(22px, 4vw, 36px);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .sample-label {
+        display: block;
+        margin-bottom: 28px;
+        color: var(--ink-muted);
+        font-size: 0.75rem;
+        font-weight: 650;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      .event-card {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .event-time {
+        display: grid;
+        place-items: center;
+        width: 62px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: var(--primary);
+        color: var(--on-primary);
+        font-size: 0.9rem;
+        font-weight: 680;
+      }
+
+      .event-card h3 {
+        margin-bottom: 3px;
+        font-family: "Arizona Mix", Georgia, serif;
+        font-size: clamp(1.45rem, 3vw, 2rem);
+        font-weight: 400;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+
+      .event-card p {
+        margin-bottom: 0;
+        color: var(--ink-muted);
+        font-size: 0.88rem;
+      }
+
+      .add-button {
+        display: grid;
+        flex: 0 0 auto;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: transparent;
+        color: var(--ink);
+        cursor: pointer;
+        font-size: 1.45rem;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 28px;
+      }
+
+      .button {
+        min-height: 48px;
+        padding: 12px 18px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 0.94rem;
+        font-weight: 650;
+      }
+
+      .button-primary {
+        border: 1px solid var(--primary);
+        background: var(--primary);
+        color: var(--on-primary);
+      }
+
+      .button-primary:hover {
+        border-color: var(--primary-hover);
+        background: var(--primary-hover);
+      }
+
+      .button-secondary {
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--ink);
+      }
+
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 38px;
+        padding: 8px 13px;
+        border-radius: 999px;
+        background: var(--surface-subtle);
+        color: var(--ink);
+        font-size: 0.82rem;
+      }
+
+      .chip::before {
+        width: 8px;
+        height: 8px;
+        margin-right: 8px;
+        border-radius: 50%;
+        background: var(--secondary);
+        content: "";
+      }
+
+      .route-sample {
+        position: relative;
+        min-height: 290px;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 18% 26%, rgb(255 255 255 / 55%) 0 4px, transparent 5px),
+          radial-gradient(circle at 78% 63%, rgb(255 255 255 / 65%) 0 3px, transparent 4px),
+          linear-gradient(135deg, var(--aqua), color-mix(in srgb, var(--aqua) 62%, var(--surface-subtle)));
+      }
+
+      .route-sample::before,
+      .route-sample::after {
+        position: absolute;
+        width: 70%;
+        height: 86%;
+        border: 1px solid rgb(35 35 36 / 20%);
+        border-radius: 46%;
+        content: "";
+        transform: rotate(-18deg);
+      }
+
+      .route-sample::before {
+        top: -42%;
+        left: -24%;
+      }
+
+      .route-sample::after {
+        right: -30%;
+        bottom: -55%;
+      }
+
+      .route-line {
+        position: absolute;
+        top: 54%;
+        left: 16%;
+        width: 66%;
+        height: 4px;
+        border-radius: 99px;
+        background: var(--primary);
+        transform: rotate(-10deg);
+        transform-origin: left center;
+      }
+
+      .route-line::before,
+      .route-line::after {
+        position: absolute;
+        top: 50%;
+        width: 19px;
+        height: 19px;
+        border: 5px solid var(--on-primary);
+        border-radius: 50%;
+        background: var(--primary);
+        box-shadow: 0 0 0 1px rgb(35 35 36 / 18%);
+        content: "";
+        transform: translateY(-50%);
+      }
+
+      .route-line::before {
+        left: -8px;
+      }
+
+      .route-line::after {
+        right: -8px;
+      }
+
+      .route-stop {
+        position: absolute;
+        top: 41%;
+        left: 48%;
+        display: grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border: 4px solid var(--on-primary);
+        border-radius: 50% 50% 50% 8px;
+        background: var(--secondary);
+        box-shadow: 0 6px 18px rgb(35 35 36 / 18%);
+        color: #20231f;
+        font-size: 0.72rem;
+        font-weight: 750;
+        transform: rotate(-45deg);
+      }
+
+      .route-stop span {
+        transform: rotate(45deg);
+      }
+
+      .route-caption {
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        left: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 16px;
+        border: 1px solid rgb(35 35 36 / 14%);
+        border-radius: 14px;
+        background: rgb(255 253 247 / 86%);
+        color: #232324;
+        backdrop-filter: blur(8px);
+      }
+
+      .route-caption strong {
+        font-family: "Arizona Mix", Georgia, serif;
+        font-size: 1.16rem;
+        font-weight: 400;
+      }
+
+      .route-caption span {
+        font-size: 0.8rem;
+      }
+
+      .contrast-list {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .contrast-item {
+        min-height: 136px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 17px;
+        background: var(--surface);
+      }
+
+      .contrast-item strong {
+        display: block;
+        margin-bottom: 6px;
+        font-family: "Arizona Mix", Georgia, serif;
+        font-size: 1.75rem;
+        font-weight: 400;
+      }
+
+      .contrast-item p {
+        margin-bottom: 18px;
+        color: var(--ink-muted);
+        font-size: 0.78rem;
+      }
+
+      .pass {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 4px 9px;
+        border-radius: 999px;
+        background: var(--surface-subtle);
+        color: var(--ink);
+        font-size: 0.72rem;
+        font-weight: 680;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        padding-top: 28px;
+        border-top: 1px solid var(--line);
+        color: var(--ink-muted);
+        font-size: 0.83rem;
+      }
+
+      .toast {
+        position: fixed;
+        z-index: 10;
+        right: 18px;
+        bottom: 18px;
+        padding: 12px 16px;
+        border-radius: 999px;
+        background: var(--ink);
+        color: var(--page);
+        box-shadow: var(--shadow);
+        font-size: 0.85rem;
+        pointer-events: none;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 150ms ease, transform 150ms ease;
+      }
+
+      .toast.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 820px) {
+        .hero,
+        .section-head,
+        .components-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          align-items: start;
+        }
+
+        .ratio-card {
+          max-width: 460px;
+        }
+
+        .section-head {
+          gap: 18px;
+        }
+
+        .swatch-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .token-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .contrast-list {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 520px) {
+        .shell {
+          width: min(100% - 24px, 1180px);
+          padding-top: 12px;
+          padding-bottom: 52px;
+        }
+
+        .topbar {
+          margin-bottom: 56px;
+        }
+
+        .wordmark-text {
+          display: none;
+        }
+
+        h1 {
+          font-size: clamp(3.35rem, 20vw, 5.2rem);
+        }
+
+        .swatch {
+          min-height: 176px;
+        }
+
+        .swatch-label {
+          inset: auto 25px 50px;
+        }
+
+        .swatch-hex {
+          inset: auto 25px 28px;
+        }
+
+        .swatch::after {
+          inset: auto 11px 11px;
+        }
+
+        .token {
+          grid-template-columns: 54px minmax(0, 1fr);
+          gap: 12px;
+          padding-right: 12px;
+        }
+
+        .token-code {
+          grid-column: 2;
+        }
+
+        .event-card {
+          grid-template-columns: auto minmax(0, 1fr);
+        }
+
+        .add-button {
+          grid-column: 1 / -1;
+          width: 100%;
+          border-radius: 999px;
+        }
+
+        .contrast-list {
+          grid-template-columns: 1fr;
+        }
+
+        .footer {
+          flex-direction: column;
+          gap: 8px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div class="wordmark" aria-label="Mia Notte Bormina">
+          <span class="wordmark-mark" aria-hidden="true"></span>
+          <span class="wordmark-text">Mia Notte Bormina</span>
+        </div>
+
+        <div class="theme-switch" role="group" aria-label="Tema de la paleta">
+          <button class="theme-option" type="button" data-set-theme="light" aria-pressed="true">Claro</button>
+          <button class="theme-option" type="button" data-set-theme="dark" aria-pressed="false">Noche</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Dirección cromática · v1</p>
+            <h1>Segnaletica Alpina</h1>
+            <p class="hero-copy">
+              Una paleta nocturna y editorial para orientarse por Bormio: crema y grafito como base,
+              verdes de naturaleza y el rojo municipal reservado para las decisiones importantes.
+            </p>
+          </div>
+
+          <aside class="ratio-card" aria-label="Proporción de uso sugerida">
+            <p>Proporción sugerida</p>
+            <div class="ratio-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="ratio-labels"><span>60% base</span><span>30% apoyo</span><span>10% señal</span></div>
+          </aside>
+        </section>
+
+        <section class="section" aria-labelledby="primitives-title">
+          <div class="section-head">
+            <div>
+              <p class="section-index">01 · Colores madre</p>
+              <h2 id="primitives-title">La familia completa</h2>
+            </div>
+            <p class="section-note">Toca cualquier muestra para copiar su valor hexadecimal.</p>
+          </div>
+
+          <div class="swatch-grid">
+            <button class="swatch" type="button" style="--swatch:#E42313;--swatch-ink:#FFF8EB" data-color="#E42313">
+              <span class="swatch-hint" aria-hidden="true">+</span>
+              <span class="swatch-label">Rojo Bormio</span>
+              <span class="swatch-hex">#E42313</span>
+            </button>
+            <button class="swatch" type="button" style="--swatch:#D03A19;--swatch-ink:#FFF8EB" data-color="#D03A19">
+              <span class="swatch-hint" aria-hidden="true">+</span>
+              <span class="swatch-label">Rojo editorial</span>
+              <span class="swatch-hex">#D03A19</span>
+            </button>
+            <button class="swatch" type="button" style="--swatch:#AF1C0E;--swatch-ink:#FFF8EB" data-color="#AF1C0E">
+              <span class="swatch-hint" aria-hidden="true">+</span>
+              <span class="swatch-label">Rojo accesible</span>
+              <span class="swatch-hex">#AF1C0E</span>
+            </button>
+            <button class="swatch" type="button" style="--swatch:#7D9244;--swatch-ink:#20231F" data-color="#7D9244">
+              <span class="swatch-hint" aria-hidden="true">+</span>
+              <span class="swatch-label">Verde naturaleza</span>
+              <span class="swatch-hex">#7D9244</span>
+            </button>
+            <button class="swatch" type="button" style="--swatch:#BFE0CF;--swatch-ink:#20231F" data-color="#BFE0CF">
+              <span class="swatch-hint" aria-hidden="true">+</span>
+              <span class="swatch-label">Aqua mapa</span>
+              <span class="swatch-hex">#BFE0CF</span>
+            </button>
+            <button class="swatch" type="button" style="--swatch:#FAF9F1;--swatch-ink:#232324" data-color="#FAF9F1">
+              <span class="swatch-hint" aria-hidden="true">+</span>
+              <span class="swatch-label">Crema papel</span>
+              <span class="swatch-hex">#FAF9F1</span>
+            </button>
+            <button class="swatch" type="button" style="--swatch:#DDE5D6;--swatch-ink:#232324" data-color="#DDE5D6">
+              <span class="swatch-hint" aria-hidden="true">+</span>
+              <span class="swatch-label">Salvia clara</span>
+              <span class="swatch-hex">#DDE5D6</span>
+            </button>
+            <button class="swatch" type="button" style="--swatch:#232324;--swatch-ink:#F8F6ED" data-color="#232324">
+              <span class="swatch-hint" aria-hidden="true">+</span>
+              <span class="swatch-label">Grafito</span>
+              <span class="swatch-hex">#232324</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="semantic-title">
+          <div class="section-head">
+            <div>
+              <p class="section-index">02 · Tema activo</p>
+              <h2 id="semantic-title">Roles, no adornos</h2>
+            </div>
+            <p class="section-note">
+              Estos valores cambian con el selector Claro/Noche y son los que usaría la interfaz real.
+            </p>
+          </div>
+
+          <div class="token-grid">
+            <article class="token">
+              <span class="token-color" style="--token:var(--page)"></span>
+              <span><strong class="token-name">Fondo</strong><span class="token-use">Lienzo general</span></span>
+              <code class="token-code" data-token="page"></code>
+            </article>
+            <article class="token">
+              <span class="token-color" style="--token:var(--surface)"></span>
+              <span><strong class="token-name">Superficie</strong><span class="token-use">Tarjetas y paneles</span></span>
+              <code class="token-code" data-token="surface"></code>
+            </article>
+            <article class="token">
+              <span class="token-color" style="--token:var(--ink)"></span>
+              <span><strong class="token-name">Texto</strong><span class="token-use">Lectura principal</span></span>
+              <code class="token-code" data-token="ink"></code>
+            </article>
+            <article class="token">
+              <span class="token-color" style="--token:var(--ink-muted)"></span>
+              <span><strong class="token-name">Texto secundario</strong><span class="token-use">Metadatos y ayuda</span></span>
+              <code class="token-code" data-token="ink-muted"></code>
+            </article>
+            <article class="token">
+              <span class="token-color" style="--token:var(--primary)"></span>
+              <span><strong class="token-name">Acción primaria</strong><span class="token-use">Elegir, confirmar, ruta</span></span>
+              <code class="token-code" data-token="primary"></code>
+            </article>
+            <article class="token">
+              <span class="token-color" style="--token:var(--secondary)"></span>
+              <span><strong class="token-name">Naturaleza</strong><span class="token-use">Categorías y apoyo</span></span>
+              <code class="token-code" data-token="secondary"></code>
+            </article>
+            <article class="token">
+              <span class="token-color" style="--token:var(--aqua)"></span>
+              <span><strong class="token-name">Mapa</strong><span class="token-use">Área cartográfica</span></span>
+              <code class="token-code" data-token="aqua"></code>
+            </article>
+            <article class="token">
+              <span class="token-color" style="--token:var(--line)"></span>
+              <span><strong class="token-name">Borde</strong><span class="token-use">Separación silenciosa</span></span>
+              <code class="token-code" data-token="line"></code>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="components-title">
+          <div class="section-head">
+            <div>
+              <p class="section-index">03 · En contexto</p>
+              <h2 id="components-title">Cómo se sentiría</h2>
+            </div>
+            <p class="section-note">Un vistazo a los colores trabajando como sistema, no como muestrario.</p>
+          </div>
+
+          <div class="components-grid">
+            <div class="sample">
+              <span class="sample-label">Evento seleccionado</span>
+              <div class="event-card">
+                <time class="event-time" datetime="20:30">20:30</time>
+                <div>
+                  <h3>Musica in piazza</h3>
+                  <p>Piazza Cavour · 45 min</p>
+                </div>
+                <button class="add-button" type="button" aria-label="Quitar evento de mi ruta">✓</button>
+              </div>
+            </div>
+
+            <div class="sample">
+              <span class="sample-label">Acciones y filtros</span>
+              <div class="actions">
+                <button class="button button-primary" type="button">Crear mi ruta</button>
+                <button class="button button-secondary" type="button">Añadir al calendario</button>
+              </div>
+              <div class="chip-row" aria-label="Categorías">
+                <span class="chip">Comida</span>
+                <span class="chip">Música</span>
+                <span class="chip">Tradición</span>
+              </div>
+            </div>
+
+            <div class="sample route-sample">
+              <span class="route-line" aria-hidden="true"></span>
+              <span class="route-stop" aria-hidden="true"><span>2</span></span>
+              <div class="route-caption">
+                <strong>5 paradas</strong>
+                <span>1,8 km · 27 min a pie</span>
+              </div>
+            </div>
+
+            <div class="sample">
+              <span class="sample-label">Contraste verificado</span>
+              <div class="contrast-list">
+                <article class="contrast-item">
+                  <strong data-ratio="body">14.38</strong>
+                  <p>Texto / fondo</p>
+                  <span class="pass">AAA</span>
+                </article>
+                <article class="contrast-item">
+                  <strong data-ratio="muted">5.72</strong>
+                  <p>Secundario / fondo</p>
+                  <span class="pass">AA</span>
+                </article>
+                <article class="contrast-item">
+                  <strong data-ratio="action">6.42</strong>
+                  <p>Acción / fondo</p>
+                  <span class="pass">AA</span>
+                </article>
+                <article class="contrast-item">
+                  <strong data-ratio="map">11.18</strong>
+                  <p>Texto / mapa</p>
+                  <span class="pass">AAA</span>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>Paleta exploratoria para Mia Notte Bormina</span>
+        <span>ABC Arizona · Light + Dark</span>
+      </footer>
+    </div>
+
+    <div class="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      const root = document.documentElement;
+      const themeButtons = [...document.querySelectorAll("[data-set-theme]")];
+      const tokenValues = {
+        light: {
+          page: "#F7F5EC",
+          surface: "#FFFDF7",
+          ink: "#232324",
+          "ink-muted": "#5D625A",
+          primary: "#AF1C0E",
+          secondary: "#5D6F31",
+          aqua: "#BFE0CF",
+          line: "#C8CBBE"
+        },
+        dark: {
+          page: "#20231F",
+          surface: "#292D28",
+          ink: "#F8F6ED",
+          "ink-muted": "#C2CABF",
+          primary: "#D03A19",
+          secondary: "#AFC46D",
+          aqua: "#BFE0CF",
+          line: "#4D524A"
+        }
+      };
+      const ratios = {
+        light: { body: "14.38", muted: "5.72", action: "6.42", map: "11.18" },
+        dark: { body: "14.68", muted: "9.45", action: "4.62", map: "11.18" }
+      };
+      let toastTimer;
+
+      function updateTheme(theme) {
+        root.dataset.theme = theme;
+        themeButtons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.setTheme === theme));
+        });
+        document.querySelectorAll("[data-token]").forEach((token) => {
+          token.textContent = tokenValues[theme][token.dataset.token];
+        });
+        document.querySelectorAll("[data-ratio]").forEach((item) => {
+          item.textContent = ratios[theme][item.dataset.ratio];
+        });
+        document.querySelector('meta[name="theme-color"]')?.setAttribute("content", tokenValues[theme].page);
+      }
+
+      function showToast(message) {
+        const toast = document.querySelector(".toast");
+        toast.textContent = message;
+        toast.classList.add("is-visible");
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), 1500);
+      }
+
+      themeButtons.forEach((button) => {
+        button.addEventListener("click", () => updateTheme(button.dataset.setTheme));
+      });
+
+      document.querySelectorAll("[data-color]").forEach((swatch) => {
+        swatch.addEventListener("click", async () => {
+          const color = swatch.dataset.color;
+          try {
+            await navigator.clipboard.writeText(color);
+            showToast(`${color} copiado`);
+          } catch {
+            showToast(color);
+          }
+        });
+      });
+
+      const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      updateTheme(preferredTheme);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Asset Lab — Mia Notte Bormina</title>
+    <style>
+      @font-face {
+        font-family: "Arizona Mix";
+        src: url("../public/fonts/arizona-mix.woff2") format("woff2");
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Arizona Sans";
+        src: url("../public/fonts/arizona-sans.woff2") format("woff2");
+        font-display: swap;
+      }
+
+      :root {
+        color-scheme: light;
+        --page: #f7f5ec;
+        --surface: #fffdf7;
+        --surface-2: #e8ecd9;
+        --ink: #232324;
+        --muted: #5d625a;
+        --line: #c8cbbe;
+        --red: #af1c0e;
+        --red-bright: #e42313;
+        --green: #5d6f31;
+        --green-bright: #7d9244;
+        --aqua: #bfe0cf;
+        --cream: #fff8eb;
+        --violet: #a9a1df;
+        --grid: rgb(35 35 36 / 7%);
+        --shadow: 0 20px 60px rgb(35 35 36 / 9%);
+      }
+
+      html[data-theme="dark"] {
+        color-scheme: dark;
+        --page: #20231f;
+        --surface: #292d28;
+        --surface-2: #34382f;
+        --ink: #f8f6ed;
+        --muted: #c2cabf;
+        --line: #4d524a;
+        --red: #d03a19;
+        --red-bright: #ff8063;
+        --green: #afc46d;
+        --green-bright: #bed77b;
+        --aqua: #bfe0cf;
+        --cream: #fff8eb;
+        --violet: #b9b1ef;
+        --grid: rgb(248 246 237 / 7%);
+        --shadow: 0 24px 70px rgb(0 0 0 / 24%);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background:
+          linear-gradient(90deg, transparent 0 calc(100% - 1px), var(--grid) calc(100% - 1px)) 0 0 / 64px 64px,
+          linear-gradient(0deg, transparent 0 calc(100% - 1px), var(--grid) calc(100% - 1px)) 0 0 / 64px 64px,
+          var(--page);
+        color: var(--ink);
+        font-family: "Arizona Sans", ui-sans-serif, system-ui, sans-serif;
+        font-size: 16px;
+        line-height: 1.45;
+        transition: background-color 180ms ease, color 180ms ease;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      button:focus-visible {
+        outline: 3px solid var(--red-bright);
+        outline-offset: 3px;
+      }
+
+      .sprite {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+      }
+
+      .shell {
+        width: min(1180px, calc(100% - 32px));
+        margin-inline: auto;
+        padding-block: 20px 80px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 52px;
+        margin-bottom: clamp(56px, 8vw, 108px);
+      }
+
+      .wordmark {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--ink);
+        font-size: 0.78rem;
+        font-weight: 680;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .wordmark-mark {
+        display: grid;
+        grid-template-columns: repeat(3, 4px);
+        gap: 3px;
+      }
+
+      .wordmark-mark span {
+        width: 4px;
+        height: 4px;
+        background: currentColor;
+      }
+
+      .wordmark-mark span:nth-child(5) {
+        background: var(--red-bright);
+      }
+
+      .theme-switch {
+        display: inline-grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3px;
+        min-height: 44px;
+        padding: 3px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--surface);
+      }
+
+      .theme-option {
+        min-width: 68px;
+        min-height: 36px;
+        padding: 6px 13px;
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 0.88rem;
+      }
+
+      .theme-option[aria-pressed="true"] {
+        background: var(--ink);
+        color: var(--page);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.55fr);
+        gap: clamp(36px, 8vw, 104px);
+        align-items: end;
+        padding-bottom: clamp(64px, 10vw, 128px);
+      }
+
+      .eyebrow,
+      .section-index {
+        margin: 0 0 20px;
+        color: var(--red);
+        font-size: 0.78rem;
+        font-weight: 680;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 820px;
+        margin-bottom: 24px;
+        font-family: "Arizona Mix", Georgia, serif;
+        font-size: clamp(3.6rem, 9vw, 8rem);
+        font-weight: 400;
+        letter-spacing: -0.065em;
+        line-height: 0.82;
+      }
+
+      .hero-copy {
+        max-width: 650px;
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+      }
+
+      .direction-note {
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+      }
+
+      .direction-note strong {
+        display: block;
+        margin-bottom: 10px;
+        font-family: "Arizona Mix", Georgia, serif;
+        font-size: 1.45rem;
+        font-weight: 400;
+      }
+
+      .direction-note p {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .section {
+        padding-block: clamp(52px, 8vw, 96px);
+        border-top: 1px solid var(--line);
+      }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 0.55fr);
+        gap: 32px;
+        align-items: end;
+        margin-bottom: 36px;
+      }
+
+      h2 {
+        margin-bottom: 0;
+        font-family: "Arizona Mix", Georgia, serif;
+        font-size: clamp(2.5rem, 5vw, 4.8rem);
+        font-weight: 400;
+        letter-spacing: -0.05em;
+        line-height: 0.94;
+      }
+
+      .section-note {
+        margin-bottom: 3px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .asset-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .asset-card {
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .asset-art {
+        position: relative;
+        display: grid;
+        place-items: center;
+        aspect-ratio: 1.18;
+        overflow: hidden;
+        background: var(--asset-bg);
+      }
+
+      .asset-art::after {
+        position: absolute;
+        inset: 16px;
+        border: 1px solid color-mix(in srgb, var(--asset-ink) 16%, transparent);
+        border-radius: 14px;
+        content: "";
+        pointer-events: none;
+      }
+
+      .asset-art > svg {
+        width: 84%;
+        height: 84%;
+        color: var(--asset-ink);
+        transition: transform 240ms ease;
+      }
+
+      .asset-card:hover .asset-art > svg {
+        transform: scale(1.025) rotate(-0.5deg);
+      }
+
+      .asset-meta {
+        padding: 18px 19px 20px;
+      }
+
+      .asset-title-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 7px;
+      }
+
+      .asset-title {
+        margin-bottom: 0;
+        font-family: "Arizona Mix", Georgia, serif;
+        font-size: 1.55rem;
+        font-weight: 400;
+        letter-spacing: -0.025em;
+      }
+
+      .asset-number {
+        color: var(--muted);
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+      }
+
+      .asset-description {
+        min-height: 2.7em;
+        margin-bottom: 16px;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .size-test {
+        display: flex;
+        align-items: end;
+        gap: 10px;
+      }
+
+      .size-chip {
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        background: var(--page);
+      }
+
+      .size-chip svg {
+        width: 80%;
+        height: 80%;
+        color: var(--asset-ink);
+      }
+
+      .size-chip.is-large {
+        width: 64px;
+        height: 64px;
+      }
+
+      .size-chip.is-medium {
+        width: 48px;
+        height: 48px;
+      }
+
+      .size-chip.is-small {
+        width: 36px;
+        height: 36px;
+      }
+
+      .context-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+        gap: 18px;
+      }
+
+      .sample {
+        min-width: 0;
+        padding: clamp(22px, 4vw, 36px);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .sample-label {
+        display: block;
+        margin-bottom: 28px;
+        color: var(--muted);
+        font-size: 0.75rem;
+        font-weight: 680;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      .filter-list {
+        display: grid;
+        gap: 9px;
+      }
+
+      .filter {
+        display: grid;
+        grid-template-columns: 54px minmax(0, 1fr) auto;
+        gap: 14px;
+        align-items: center;
+        min-height: 70px;
+        padding: 7px 14px 7px 7px;
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        background: var(--page);
+      }
+
+      .filter-icon {
+        display: grid;
+        place-items: center;
+        width: 54px;
+        height: 54px;
+        border-radius: 11px;
+        background: var(--asset-bg);
+      }
+
+      .filter-icon svg {
+        width: 48px;
+        height: 48px;
+        color: var(--asset-ink);
+      }
+
+      .filter strong {
+        font-size: 0.94rem;
+      }
+
+      .filter-count {
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .map {
+        position: relative;
+        min-height: 520px;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 15% 24%, rgb(255 255 255 / 62%) 0 3px, transparent 4px),
+          radial-gradient(circle at 78% 68%, rgb(255 255 255 / 62%) 0 3px, transparent 4px),
+          linear-gradient(135deg, var(--aqua), color-mix(in srgb, var(--aqua) 58%, var(--surface-2)));
+      }
+
+      .map::before,
+      .map::after {
+        position: absolute;
+        width: 76%;
+        height: 72%;
+        border: 1px solid rgb(35 35 36 / 18%);
+        border-radius: 45%;
+        content: "";
+        transform: rotate(-18deg);
+      }
+
+      .map::before {
+        top: -30%;
+        left: -30%;
+      }
+
+      .map::after {
+        right: -38%;
+        bottom: -40%;
+      }
+
+      .route {
+        position: absolute;
+        top: 24%;
+        left: 19%;
+        width: 62%;
+        height: 53%;
+        border: 4px solid transparent;
+        border-top-color: var(--red);
+        border-right-color: var(--red);
+        border-radius: 10% 60% 36% 54%;
+        transform: rotate(17deg);
+      }
+
+      .marker {
+        position: absolute;
+        display: grid;
+        place-items: center;
+        width: 66px;
+        height: 66px;
+        border: 5px solid var(--cream);
+        border-radius: 50%;
+        background: var(--asset-bg);
+        box-shadow: 0 8px 22px rgb(35 35 36 / 20%);
+      }
+
+      .marker svg {
+        width: 52px;
+        height: 52px;
+        color: var(--asset-ink);
+      }
+
+      .marker.one {
+        top: 18%;
+        left: 15%;
+      }
+
+      .marker.two {
+        top: 44%;
+        left: 47%;
+      }
+
+      .marker.three {
+        right: 13%;
+        bottom: 14%;
+      }
+
+      .map-caption {
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        left: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 16px;
+        border: 1px solid rgb(35 35 36 / 14%);
+        border-radius: 14px;
+        background: rgb(255 253 247 / 88%);
+        color: #232324;
+        backdrop-filter: blur(8px);
+      }
+
+      .map-caption strong {
+        font-family: "Arizona Mix", Georgia, serif;
+        font-size: 1.2rem;
+        font-weight: 400;
+      }
+
+      .map-caption span {
+        font-size: 0.8rem;
+      }
+
+      .botanical-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .botanical {
+        position: relative;
+        min-height: 330px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: var(--surface);
+      }
+
+      .botanical svg {
+        position: absolute;
+        inset: 7%;
+        width: 86%;
+        height: 86%;
+        color: var(--green);
+      }
+
+      .botanical-label {
+        position: absolute;
+        z-index: 1;
+        right: 16px;
+        bottom: 16px;
+        left: 16px;
+        padding: 10px 12px;
+        border-radius: 11px;
+        background: color-mix(in srgb, var(--surface) 88%, transparent);
+        color: var(--muted);
+        font-size: 0.78rem;
+        backdrop-filter: blur(8px);
+      }
+
+      .decision {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 20px;
+        align-items: start;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: var(--surface-2);
+      }
+
+      .decision-mark {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--red);
+        color: var(--cream);
+        font-size: 1.3rem;
+      }
+
+      .decision h3 {
+        margin-bottom: 6px;
+        font-family: "Arizona Mix", Georgia, serif;
+        font-size: 1.65rem;
+        font-weight: 400;
+      }
+
+      .decision p {
+        max-width: 72ch;
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        padding-top: 28px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.83rem;
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .section-head,
+        .context-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .asset-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .botanical-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .botanical {
+          min-height: 280px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .shell {
+          width: calc(100% - 24px);
+          padding-top: 12px;
+          padding-bottom: 56px;
+        }
+
+        .topbar {
+          margin-bottom: 58px;
+        }
+
+        .wordmark-text {
+          display: none;
+        }
+
+        h1 {
+          font-size: clamp(3.5rem, 21vw, 5rem);
+        }
+
+        .asset-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .asset-art {
+          aspect-ratio: 1.35;
+        }
+
+        .asset-description {
+          min-height: 0;
+        }
+
+        .map {
+          min-height: 410px;
+        }
+
+        .marker {
+          width: 56px;
+          height: 56px;
+          border-width: 4px;
+        }
+
+        .marker svg {
+          width: 45px;
+          height: 45px;
+        }
+
+        .decision {
+          grid-template-columns: 1fr;
+        }
+
+        .footer {
+          flex-direction: column;
+          gap: 8px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <svg class="sprite" aria-hidden="true">
+      <defs>
+        <symbol id="asset-food" viewBox="0 0 240 240">
+          <circle cx="120" cy="120" r="74" fill="none" stroke="currentColor" stroke-width="2" />
+          <circle cx="120" cy="120" r="48" fill="var(--cream)" stroke="currentColor" stroke-width="2" />
+          <path d="M98 117c17-23 35-23 48 0-9 4-14 12-15 24h-22c-1-12-4-20-11-24Z" fill="var(--red-bright)" stroke="currentColor" stroke-width="2" />
+          <path d="M70 63v44M64 63v28M76 63v28M64 91h12M170 63v44M170 63c18 10 18 31 0 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <path d="M91 160h58" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <rect x="112" y="83" width="8" height="8" fill="var(--green-bright)" transform="rotate(45 116 87)" />
+          <rect x="135" y="91" width="6" height="6" fill="var(--violet)" />
+          <circle cx="98" cy="91" r="4" fill="currentColor" />
+        </symbol>
+
+        <symbol id="asset-music" viewBox="0 0 240 240">
+          <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M120 32v29M120 179v29M32 120h29M179 120h29M58 58l21 21M161 161l21 21M182 58l-21 21M79 161l-21 21" />
+            <circle cx="120" cy="120" r="53" />
+            <path d="M104 137V95l48-11v43" />
+          </g>
+          <circle cx="94" cy="143" r="15" fill="var(--red-bright)" stroke="currentColor" stroke-width="2" />
+          <circle cx="142" cy="133" r="15" fill="var(--violet)" stroke="currentColor" stroke-width="2" />
+          <path d="M103 106l48-11v14l-48 11Z" fill="var(--cream)" stroke="currentColor" stroke-width="2" />
+          <circle cx="120" cy="120" r="81" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 10" />
+        </symbol>
+
+        <symbol id="asset-show" viewBox="0 0 240 240">
+          <path d="M38 186 120 43l82 143Z" fill="var(--cream)" stroke="currentColor" stroke-width="2" />
+          <path d="M120 43v143H38Z" fill="var(--violet)" opacity=".88" />
+          <path d="M120 43v143h82Z" fill="var(--red-bright)" opacity=".88" />
+          <circle cx="120" cy="137" r="35" fill="var(--cream)" stroke="currentColor" stroke-width="2" />
+          <path d="m120 110 7 19 20 1-16 12 5 20-16-11-16 11 5-20-16-12 20-1Z" fill="var(--green-bright)" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+          <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M52 65h27M65 52v27M162 68h27M176 54v28" />
+          </g>
+        </symbol>
+
+        <symbol id="asset-kids" viewBox="0 0 240 240">
+          <path d="M120 37c0 0 9 35 34 21 29-16 56 18 36 44-17 22 13 35 13 35s-33 1-29 29c5 34-37 48-55 22-17-24-36 3-36 3s9-34-20-39c-32-6-35-50-4-62 25-10 7-36 7-36s33 18 54-17Z" fill="var(--green-bright)" stroke="currentColor" stroke-width="2" />
+          <circle cx="94" cy="105" r="16" fill="var(--cream)" stroke="currentColor" stroke-width="2" />
+          <circle cx="146" cy="96" r="14" fill="var(--violet)" stroke="currentColor" stroke-width="2" />
+          <path d="M70 166c2-31 12-47 27-47s27 17 30 47M126 156c3-30 10-46 22-46 13 0 22 14 26 43" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <path d="M91 140c14 11 28 11 42 0" fill="none" stroke="var(--red-bright)" stroke-width="5" stroke-linecap="round" />
+          <rect x="49" y="57" width="8" height="8" fill="var(--red-bright)" />
+          <rect x="186" y="57" width="7" height="7" fill="var(--cream)" transform="rotate(45 189.5 60.5)" />
+        </symbol>
+
+        <symbol id="asset-culture" viewBox="0 0 240 240">
+          <path d="M45 185V69l75-32 75 32v116Z" fill="var(--cream)" stroke="currentColor" stroke-width="2" />
+          <path d="m45 69 75 39 75-39" fill="none" stroke="currentColor" stroke-width="2" />
+          <path d="M120 37v148M45 127h150" fill="none" stroke="currentColor" stroke-width="2" />
+          <path d="m45 127 37-19 38 19 37-19 38 19v58H45Z" fill="var(--aqua)" stroke="currentColor" stroke-width="2" />
+          <path d="m82 108 38-39 37 39-37 19Z" fill="var(--green-bright)" stroke="currentColor" stroke-width="2" />
+          <circle cx="120" cy="127" r="12" fill="var(--red-bright)" stroke="currentColor" stroke-width="2" />
+          <path d="M68 147v20M93 147v20M147 147v20M172 147v20" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </symbol>
+
+        <symbol id="asset-shopping" viewBox="0 0 240 240">
+          <path d="M57 82h126l-12 110H69Z" fill="var(--cream)" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+          <path d="M91 94V70c0-20 12-33 29-33s29 13 29 33v24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <path d="M69 124h102l-7 60H76Z" fill="var(--violet)" opacity=".92" />
+          <path d="M92 152h56M120 124v56" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <circle cx="120" cy="152" r="16" fill="var(--red-bright)" stroke="currentColor" stroke-width="2" />
+          <path d="M42 56h24M54 44v24M176 53h26M189 40v26" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <rect x="73" y="46" width="7" height="7" fill="var(--green-bright)" transform="rotate(45 76.5 49.5)" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <div class="shell">
+      <header class="topbar">
+        <div class="wordmark" aria-label="Mia Notte Bormina">
+          <span class="wordmark-mark" aria-hidden="true">
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+          </span>
+          <span class="wordmark-text">Mia Notte Bormina</span>
+        </div>
+
+        <div class="theme-switch" role="group" aria-label="Tema de la lámina">
+          <button class="theme-option" type="button" data-set-theme="light" aria-pressed="true">Claro</button>
+          <button class="theme-option" type="button" data-set-theme="dark" aria-pressed="false">Noche</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Asset lab · dirección 01</p>
+            <h1>Piccoli segni di Bormio</h1>
+            <p class="hero-copy">
+              Seis ilustraciones geométricas para reconocer cada tipo de evento de un vistazo.
+              Tienen suficiente personalidad para funcionar como imagen y suficiente claridad para sobrevivir dentro del mapa.
+            </p>
+          </div>
+
+          <aside class="direction-note">
+            <strong>Geometría primero, poesía después.</strong>
+            <p>
+              El lenguaje modular de tus referencias es la base. El dibujo botánico aparece como textura ambiental,
+              no como icono funcional.
+            </p>
+          </aside>
+        </section>
+
+        <section class="section" aria-labelledby="family-title">
+          <div class="section-head">
+            <div>
+              <p class="section-index">01 · Familia principal</p>
+              <h2 id="family-title">Seis categorías, una voz</h2>
+            </div>
+            <p class="section-note">
+              Cada ilustración usa la misma retícula, trazo fino, formas elementales y tres colores como máximo.
+            </p>
+          </div>
+
+          <div class="asset-grid">
+            <article class="asset-card" style="--asset-bg:#D03A19;--asset-ink:#FFF8EB">
+              <div class="asset-art">
+                <svg role="img" aria-label="Ilustración geométrica de comida"><use href="#asset-food"></use></svg>
+              </div>
+              <div class="asset-meta">
+                <div class="asset-title-row">
+                  <h3 class="asset-title">Gusto</h3>
+                  <span class="asset-number">01</span>
+                </div>
+                <p class="asset-description">Un plato alpino construido como una señal: bocado, cubiertos y pequeñas guarniciones.</p>
+                <div class="size-test" aria-label="Prueba de tamaños">
+                  <span class="size-chip is-large"><svg><use href="#asset-food"></use></svg></span>
+                  <span class="size-chip is-medium"><svg><use href="#asset-food"></use></svg></span>
+                  <span class="size-chip is-small"><svg><use href="#asset-food"></use></svg></span>
+                </div>
+              </div>
+            </article>
+
+            <article class="asset-card" style="--asset-bg:#BFE0CF;--asset-ink:#203E38">
+              <div class="asset-art">
+                <svg role="img" aria-label="Ilustración geométrica de música"><use href="#asset-music"></use></svg>
+              </div>
+              <div class="asset-meta">
+                <div class="asset-title-row">
+                  <h3 class="asset-title">Musica</h3>
+                  <span class="asset-number">02</span>
+                </div>
+                <p class="asset-description">Una nota doble dentro de una onda radial; se lee como sonido incluso a 36 píxeles.</p>
+                <div class="size-test" aria-label="Prueba de tamaños">
+                  <span class="size-chip is-large"><svg><use href="#asset-music"></use></svg></span>
+                  <span class="size-chip is-medium"><svg><use href="#asset-music"></use></svg></span>
+                  <span class="size-chip is-small"><svg><use href="#asset-music"></use></svg></span>
+                </div>
+              </div>
+            </article>
+
+            <article class="asset-card" style="--asset-bg:#232324;--asset-ink:#FFF8EB">
+              <div class="asset-art">
+                <svg role="img" aria-label="Ilustración geométrica de espectáculo"><use href="#asset-show"></use></svg>
+              </div>
+              <div class="asset-meta">
+                <div class="asset-title-row">
+                  <h3 class="asset-title">Spettacoli</h3>
+                  <span class="asset-number">03</span>
+                </div>
+                <p class="asset-description">Dos haces de luz y una estrella central: escena, fuego, teatro o performance.</p>
+                <div class="size-test" aria-label="Prueba de tamaños">
+                  <span class="size-chip is-large"><svg><use href="#asset-show"></use></svg></span>
+                  <span class="size-chip is-medium"><svg><use href="#asset-show"></use></svg></span>
+                  <span class="size-chip is-small"><svg><use href="#asset-show"></use></svg></span>
+                </div>
+              </div>
+            </article>
+
+            <article class="asset-card" style="--asset-bg:#7D9244;--asset-ink:#20231F">
+              <div class="asset-art">
+                <svg role="img" aria-label="Ilustración geométrica de actividades infantiles"><use href="#asset-kids"></use></svg>
+              </div>
+              <div class="asset-meta">
+                <div class="asset-title-row">
+                  <h3 class="asset-title">Bambini</h3>
+                  <span class="asset-number">04</span>
+                </div>
+                <p class="asset-description">Dos personajes dentro de una forma orgánica; lúdico sin recurrir al típico icono de bebé.</p>
+                <div class="size-test" aria-label="Prueba de tamaños">
+                  <span class="size-chip is-large"><svg><use href="#asset-kids"></use></svg></span>
+                  <span class="size-chip is-medium"><svg><use href="#asset-kids"></use></svg></span>
+                  <span class="size-chip is-small"><svg><use href="#asset-kids"></use></svg></span>
+                </div>
+              </div>
+            </article>
+
+            <article class="asset-card" style="--asset-bg:#E8ECD9;--asset-ink:#38432B">
+              <div class="asset-art">
+                <svg role="img" aria-label="Ilustración geométrica de arte y tradición"><use href="#asset-culture"></use></svg>
+              </div>
+              <div class="asset-meta">
+                <div class="asset-title-row">
+                  <h3 class="asset-title">Arte e tradizione</h3>
+                  <span class="asset-number">05</span>
+                </div>
+                <p class="asset-description">Casa, montaña y telar comparten una retícula: patrimonio vivo, no museo estático.</p>
+                <div class="size-test" aria-label="Prueba de tamaños">
+                  <span class="size-chip is-large"><svg><use href="#asset-culture"></use></svg></span>
+                  <span class="size-chip is-medium"><svg><use href="#asset-culture"></use></svg></span>
+                  <span class="size-chip is-small"><svg><use href="#asset-culture"></use></svg></span>
+                </div>
+              </div>
+            </article>
+
+            <article class="asset-card" style="--asset-bg:#A9A1DF;--asset-ink:#29233C">
+              <div class="asset-art">
+                <svg role="img" aria-label="Ilustración geométrica de compras"><use href="#asset-shopping"></use></svg>
+              </div>
+              <div class="asset-meta">
+                <div class="asset-title-row">
+                  <h3 class="asset-title">Shopping</h3>
+                  <span class="asset-number">06</span>
+                </div>
+                <p class="asset-description">La bolsa se convierte en escaparate y paquete; reconocible, pero menos literal.</p>
+                <div class="size-test" aria-label="Prueba de tamaños">
+                  <span class="size-chip is-large"><svg><use href="#asset-shopping"></use></svg></span>
+                  <span class="size-chip is-medium"><svg><use href="#asset-shopping"></use></svg></span>
+                  <span class="size-chip is-small"><svg><use href="#asset-shopping"></use></svg></span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="context-title">
+          <div class="section-head">
+            <div>
+              <p class="section-index">02 · Prueba de uso</p>
+              <h2 id="context-title">En la interfaz real</h2>
+            </div>
+            <p class="section-note">
+              El dibujo grande crea identidad. La misma silueta reducida sirve para filtros y marcadores.
+            </p>
+          </div>
+
+          <div class="context-grid">
+            <div class="sample">
+              <span class="sample-label">Filtros de categoría</span>
+              <div class="filter-list">
+                <div class="filter" style="--asset-bg:#D03A19;--asset-ink:#FFF8EB">
+                  <span class="filter-icon"><svg><use href="#asset-food"></use></svg></span>
+                  <strong>Gusto</strong>
+                  <span class="filter-count">18</span>
+                </div>
+                <div class="filter" style="--asset-bg:#BFE0CF;--asset-ink:#203E38">
+                  <span class="filter-icon"><svg><use href="#asset-music"></use></svg></span>
+                  <strong>Musica</strong>
+                  <span class="filter-count">16</span>
+                </div>
+                <div class="filter" style="--asset-bg:#232324;--asset-ink:#FFF8EB">
+                  <span class="filter-icon"><svg><use href="#asset-show"></use></svg></span>
+                  <strong>Spettacoli</strong>
+                  <span class="filter-count">12</span>
+                </div>
+                <div class="filter" style="--asset-bg:#7D9244;--asset-ink:#20231F">
+                  <span class="filter-icon"><svg><use href="#asset-kids"></use></svg></span>
+                  <strong>Bambini</strong>
+                  <span class="filter-count">13</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="sample map">
+              <span class="route" aria-hidden="true"></span>
+              <span class="marker one" style="--asset-bg:#D03A19;--asset-ink:#FFF8EB">
+                <svg><use href="#asset-food"></use></svg>
+              </span>
+              <span class="marker two" style="--asset-bg:#BFE0CF;--asset-ink:#203E38">
+                <svg><use href="#asset-music"></use></svg>
+              </span>
+              <span class="marker three" style="--asset-bg:#232324;--asset-ink:#FFF8EB">
+                <svg><use href="#asset-show"></use></svg>
+              </span>
+              <div class="map-caption">
+                <strong>La tua notte</strong>
+                <span>3 tappe · 24 min</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="botanical-title">
+          <div class="section-head">
+            <div>
+              <p class="section-index">03 · Lenguaje secundario</p>
+              <h2 id="botanical-title">El trazo poético</h2>
+            </div>
+            <p class="section-note">
+              La primera referencia funciona mejor como decoración editorial: transiciones, estados vacíos y portada.
+            </p>
+          </div>
+
+          <div class="botanical-grid">
+            <article class="botanical">
+              <svg viewBox="0 0 300 260" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <path d="M150 235c2-70 0-113-10-151" />
+                <path d="M141 88c-25 13-42 30-52 54M143 104c23 9 40 26 53 50" />
+                <path d="M89 142c21 0 35 10 47 27M196 154c-19 0-33 8-44 25" />
+                <g transform="translate(139 69)">
+                  <circle r="15" fill="#E5C94C" stroke="none" opacity=".8" />
+                  <path d="M0-48V-19M0 19V48M-48 0H-19M19 0H48M-34-34l20 20M14 14l20 20M34-34 14-14M-14 14l-20 20M-45-16l27 10M18 6l27 10M-45 16l27-10M18-6l27-10M-16-45l10 27M6 18l10 27M16-45 6-18M-6 18l-10 27" />
+                </g>
+              </svg>
+              <span class="botanical-label">Portada · bienvenida · transición</span>
+            </article>
+
+            <article class="botanical">
+              <svg viewBox="0 0 300 260" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <path d="M52 215c50-42 101-98 189-163" stroke-dasharray="3 8" />
+                <circle cx="80" cy="191" r="7" fill="#E42313" stroke="none" />
+                <circle cx="149" cy="128" r="7" fill="#A9A1DF" stroke="none" />
+                <circle cx="218" cy="70" r="7" fill="#7D9244" stroke="none" />
+                <path d="M64 181h32M80 165v32M133 118h32M149 102v32M202 60h32M218 44v32" />
+                <path d="M43 221c19 3 34 11 44 24M207 54c18-5 32-15 42-31" />
+              </svg>
+              <span class="botanical-label">Ruta vacía · carga · recorrido</span>
+            </article>
+
+            <article class="botanical">
+              <svg viewBox="0 0 300 260" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <path d="M74 224c45-78 91-132 151-181M109 167c-4-22-2-43 7-62M109 167c22-1 42 4 58 16M160 112c-3-21 0-40 10-58M160 112c20 0 38 6 52 19" />
+                <path d="M102 104c0-14 11-25 25-25s25 11 25 25-11 25-25 25-25-11-25-25Z" />
+                <path d="M125 79V52M127 129v27M102 104H74M152 104h28M109 86 90 67M145 122l19 19M145 86l19-19M109 122l-19 19" />
+                <circle cx="127" cy="104" r="10" fill="#E5C94C" stroke="none" opacity=".8" />
+              </svg>
+              <span class="botanical-label">Estado completado · calendario</span>
+            </article>
+          </div>
+
+          <div class="decision" style="margin-top:18px">
+            <span class="decision-mark" aria-hidden="true">✓</span>
+            <div>
+              <h3>Mi recomendación</h3>
+              <p>
+                Continuaría desarrollando la familia geométrica como sistema funcional y reservaría estos dibujos de línea
+                para momentos editoriales. Así la web conserva carácter sin sacrificar lectura en tarjetas, filtros y mapa.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>Exploración de assets para Mia Notte Bormina</span>
+        <span>SVG editable · Light + Dark</span>
+      </footer>
+    </div>
+
+    <script>
+      const root = document.documentElement;
+      const themeButtons = [...document.querySelectorAll("[data-set-theme]")];
+
+      function setTheme(theme) {
+        root.dataset.theme = theme;
+        themeButtons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.setTheme === theme));
+        });
+      }
+
+      themeButtons.forEach((button) => {
+        button.addEventListener("click", () => setTheme(button.dataset.setTheme));
+      });
+
+      setTheme(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    </script>
+  </body>
+</html>
