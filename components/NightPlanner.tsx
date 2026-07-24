@@ -773,7 +773,7 @@ export function NightPlanner() {
               />
             )}
 
-            {!journeyActive && !journeyComplete && (
+            {!journeyActive && (
               <div className="route-controls">
                 <div className="section-heading">
                   <h2>
@@ -828,15 +828,13 @@ export function NightPlanner() {
               </div>
             )}
 
-            {!journeyActive && !journeyComplete && (
-              <RoutePanel
-                route={route}
-                language={language}
-                onDiscover={() => setView("discover")}
-                onShare={shareRoute}
-                shareDone={shareDone}
-              />
-            )}
+            <RoutePanel
+              route={route}
+              language={language}
+              onDiscover={() => setView("discover")}
+              onShare={shareRoute}
+              shareDone={shareDone}
+            />
           </section>
         </div>
       </div>
