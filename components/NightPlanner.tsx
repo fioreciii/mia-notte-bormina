@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  CalendarDays,
   Check,
   ChevronDown,
   Compass,
@@ -46,6 +45,7 @@ import {
 } from "@/lib/route";
 import { CategoryIcon } from "./CategoryIcon";
 import { EventCard } from "./EventCard";
+import { EventCountdown } from "./EventCountdown";
 import { InteractiveMap } from "./InteractiveMap";
 import { JourneyPanel } from "./JourneyPanel";
 import { RouteMapPreview } from "./RouteMapPreview";
@@ -535,11 +535,8 @@ export function NightPlanner() {
   return (
     <main className="app-shell" data-theme={theme}>
       <header className="site-header">
+        <EventCountdown language={language} />
         <div className="header-actions">
-          <span className="event-date">
-            <CalendarDays size={15} />
-            25.07.26
-          </span>
           <button
             className="theme-toggle"
             onClick={() =>

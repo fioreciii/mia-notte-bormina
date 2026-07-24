@@ -154,7 +154,7 @@ input:focus-visible {
   top: 0;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-inline: -28px;
   min-height: 76px;
   padding-inline: 28px;
@@ -164,7 +164,6 @@ input:focus-visible {
 }
 
 .header-actions,
-.event-date,
 .event-card-heading,
 .time-row,
 .route-title-row,
@@ -181,11 +180,65 @@ input:focus-visible {
   gap: 12px;
 }
 
-.event-date {
-  gap: 7px;
+.event-countdown {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+  line-height: 1.1;
+}
+
+.event-countdown > span {
+  overflow: hidden;
   color: var(--ink-soft);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 520;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-countdown > strong {
+  overflow: hidden;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 480;
+  letter-spacing: -0.015em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-countdown > strong i {
+  color: var(--copper);
+  font-style: normal;
+  font-weight: 360;
+}
+
+.event-countdown.is-live {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.event-countdown.is-live > strong {
+  animation: header-greeting-in 280ms ease-out;
+}
+
+.event-countdown-language {
+  color: var(--copper) !important;
+  font-size: 10px !important;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes header-greeting-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .theme-toggle,
@@ -1777,8 +1830,12 @@ input:focus-visible {
     padding-inline: 14px;
   }
 
-  .event-date {
-    display: none;
+  .event-countdown {
+    max-width: calc(100% - 156px);
+  }
+
+  .event-countdown > strong {
+    font-size: 16px;
   }
 
   .hero {
