@@ -6,3 +6,4 @@ node_modules/
 IMmNiH.pdf
 .DS_Store
 *.log
+.vercel
