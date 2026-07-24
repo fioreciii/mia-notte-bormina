@@ -33,7 +33,6 @@
   --surface-raised: #34382f;
   --surface-solid: #292d28;
   --ambient: rgba(208, 58, 25, 0.1);
-  --grid: rgba(248, 246, 237, 0.065);
   --map-frame: #292d28;
   --info: #bfe0cf;
   --info-bg: rgba(191, 224, 207, 0.12);
@@ -71,7 +70,6 @@
   --surface-raised: #f2f1e7;
   --surface-solid: #fffdf7;
   --ambient: rgba(228, 35, 19, 0.075);
-  --grid: rgba(35, 35, 36, 0.065);
   --map-frame: #fffdf7;
   --info: #3c665c;
   --info-bg: #dceae2;
@@ -100,8 +98,6 @@ body {
   min-width: 320px;
   background:
     radial-gradient(circle at 12% 3%, var(--ambient), transparent 28rem),
-    linear-gradient(90deg, transparent 0 calc(100% - 1px), var(--grid) calc(100% - 1px)) 0 0 / 64px 64px,
-    linear-gradient(0deg, transparent 0 calc(100% - 1px), var(--grid) calc(100% - 1px)) 0 0 / 64px 64px,
     var(--paper);
   color: var(--ink);
   font-family: var(--font-sans);
@@ -1274,8 +1270,6 @@ input:focus-visible {
   body {
     background:
       radial-gradient(circle at 10% 2%, var(--ambient), transparent 22rem),
-      linear-gradient(90deg, transparent 0 calc(100% - 1px), var(--grid) calc(100% - 1px)) 0 0 / 48px 48px,
-      linear-gradient(0deg, transparent 0 calc(100% - 1px), var(--grid) calc(100% - 1px)) 0 0 / 48px 48px,
       var(--paper);
   }
 
