@@ -32,14 +32,22 @@ import {
   ui,
 } from "@/lib/i18n";
 import {
+  AUTO_VISIT_DELAY_MS,
+  MAX_AUTO_VISIT_ACCURACY_METERS,
+  arrivalRadiusMeters,
+  nearestUnvisitedStop,
+} from "@/lib/journey";
+import {
   MapPoint,
   geolocationToMap,
+  isInsideBormioMap,
   landmarkStarts,
   planRoute,
 } from "@/lib/route";
 import { CategoryIcon } from "./CategoryIcon";
 import { EventCard } from "./EventCard";
 import { InteractiveMap } from "./InteractiveMap";
+import { JourneyPanel } from "./JourneyPanel";
 import { RouteMapPreview } from "./RouteMapPreview";
 import { RoutePanel } from "./RoutePanel";
 
@@ -147,6 +155,13 @@ export function NightPlanner() {
   const [languageOpen, setLanguageOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const [theme, setTheme] = useState<Theme>("dark");
+  const [journeyActive, setJourneyActive] = useState(false);
+  const [journeyPaused, setJourneyPaused] = useState(false);
+  const [currentPoint, setCurrentPoint] = useState<MapPoint>();
+  const [locationAccuracy, setLocationAccuracy] = useState<number>();
+  const [visited, setVisited] = useState<Set<number>>(new Set());
+  const [nearbyStopId, setNearbyStopId] = useState<number>();
+  const [journeyLocationMessage, setJourneyLocationMessage] = useState("");
 
   const t = ui[language];
 
@@ -160,12 +175,25 @@ export function NightPlanner() {
     const storedTheme = localStorage.getItem(
       "notte-bormina-theme",
     ) as Theme | null;
+    const storedVisited = localStorage.getItem(
+      "notte-bormina-visited-2026-07-25",
+    );
     const initial = urlStops.length
       ? urlStops
       : stored
         ? (JSON.parse(stored) as number[])
         : [];
     setSelected(new Set(initial));
+    if (storedVisited) {
+      try {
+        const ids = (JSON.parse(storedVisited) as number[]).filter((id) =>
+          events.some((event) => event.id === id),
+        );
+        setVisited(new Set(ids));
+      } catch {
+        localStorage.removeItem("notte-bormina-visited-2026-07-25");
+      }
+    }
     const sharedTime = Number(params.get("time"));
     if (sharedTime >= 17 * 60 && sharedTime <= 24 * 60) {
       setStartTime(sharedTime);
@@ -232,6 +260,14 @@ export function NightPlanner() {
     window.history.replaceState({}, "", url);
   }, [selected, language, startTime, startMode, customStart, hydrated]);
 
+  useEffect(() => {
+    if (!hydrated) return;
+    localStorage.setItem(
+      "notte-bormina-visited-2026-07-25",
+      JSON.stringify([...visited]),
+    );
+  }, [visited, hydrated]);
+
   const selectedStops = useMemo(
     () => events.filter((event) => selected.has(event.id)),
     [selected],
@@ -249,6 +285,111 @@ export function NightPlanner() {
     () => planRoute(selectedStops, startTime, startPoint),
     [selectedStops, startTime, startPoint],
   );
+  const journeyComplete =
+    route.steps.length > 0 &&
+    route.steps.every((step) => visited.has(step.stop.id));
+
+  useEffect(() => {
+    if (
+      !hydrated ||
+      !journeyActive ||
+      journeyPaused ||
+      journeyComplete
+    ) {
+      return;
+    }
+
+    if (!navigator.geolocation) {
+      setJourneyLocationMessage(ui[language].journeyLocationError);
+      return;
+    }
+
+    setJourneyLocationMessage("");
+    const watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        const { latitude, longitude, accuracy } = position.coords;
+        if (!isInsideBormioMap(latitude, longitude)) {
+          setCurrentPoint(undefined);
+          setLocationAccuracy(accuracy);
+          setJourneyLocationMessage(ui[language].journeyOutsideArea);
+          return;
+        }
+        setCurrentPoint(geolocationToMap(latitude, longitude));
+        setLocationAccuracy(accuracy);
+        setJourneyLocationMessage("");
+      },
+      () => {
+        setJourneyLocationMessage(ui[language].journeyLocationError);
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 4000,
+        timeout: 12000,
+      },
+    );
+
+    return () => navigator.geolocation.clearWatch(watchId);
+  }, [
+    hydrated,
+    journeyActive,
+    journeyPaused,
+    journeyComplete,
+    language,
+  ]);
+
+  useEffect(() => {
+    if (
+      !journeyActive ||
+      journeyPaused ||
+      journeyComplete ||
+      !currentPoint ||
+      locationAccuracy === undefined ||
+      locationAccuracy > MAX_AUTO_VISIT_ACCURACY_METERS
+    ) {
+      setNearbyStopId(undefined);
+      return;
+    }
+
+    const nearest = nearestUnvisitedStop(
+      route.steps.map((step) => step.stop),
+      visited,
+      currentPoint,
+    );
+    const radius = arrivalRadiusMeters(locationAccuracy);
+    setNearbyStopId(
+      nearest && nearest.distance <= radius ? nearest.stop.id : undefined,
+    );
+  }, [
+    journeyActive,
+    journeyPaused,
+    journeyComplete,
+    currentPoint,
+    locationAccuracy,
+    route,
+    visited,
+  ]);
+
+  useEffect(() => {
+    if (
+      !journeyActive ||
+      journeyPaused ||
+      journeyComplete ||
+      !nearbyStopId
+    ) {
+      return;
+    }
+
+    const timer = window.setTimeout(
+      () => markJourneyVisited(nearbyStopId),
+      AUTO_VISIT_DELAY_MS,
+    );
+    return () => window.clearTimeout(timer);
+  }, [
+    journeyActive,
+    journeyPaused,
+    journeyComplete,
+    nearbyStopId,
+  ]);
 
   const visibleEvents = useMemo(() => {
     const term = search.trim().toLocaleLowerCase(language);
@@ -262,6 +403,54 @@ export function NightPlanner() {
       return inCategory && inSearch;
     });
   }, [activeCategory, language, search]);
+
+  function markJourneyVisited(id: number) {
+    setVisited((current) => {
+      if (current.has(id)) return current;
+      const next = new Set(current);
+      next.add(id);
+      return next;
+    });
+    setNearbyStopId(undefined);
+    if (typeof navigator.vibrate === "function") navigator.vibrate(90);
+  }
+
+  function startJourney() {
+    setJourneyActive(true);
+    setJourneyPaused(false);
+    setJourneyLocationMessage("");
+    setView("route");
+  }
+
+  function pauseJourney() {
+    setJourneyPaused(true);
+    setNearbyStopId(undefined);
+  }
+
+  function continueJourney() {
+    setJourneyActive(true);
+    setJourneyPaused(false);
+    setJourneyLocationMessage("");
+  }
+
+  function endJourney() {
+    setJourneyActive(false);
+    setJourneyPaused(false);
+    setCurrentPoint(undefined);
+    setLocationAccuracy(undefined);
+    setNearbyStopId(undefined);
+    setJourneyLocationMessage("");
+  }
+
+  function resetJourney() {
+    const routeIds = new Set(route.steps.map((step) => step.stop.id));
+    setVisited((current) => {
+      const next = new Set(current);
+      for (const id of routeIds) next.delete(id);
+      return next;
+    });
+    endJourney();
+  }
 
   function toggleStop(id: number) {
     setSelected((current) => {
@@ -415,6 +604,10 @@ export function NightPlanner() {
             activeEvent={activeEvent}
             route={route}
             startPoint={startPoint}
+            currentPoint={currentPoint}
+            visited={visited}
+            journeyActive={journeyActive}
+            nearbyStopId={nearbyStopId}
             pickingStart={pickingStart}
             onToggle={toggleStop}
             onActive={setActiveEvent}
@@ -542,9 +735,36 @@ export function NightPlanner() {
             className={`mobile-view route-view ${view === "route" ? "is-visible" : ""}`}
           >
             {route.steps.length > 0 && (
+              <JourneyPanel
+                route={route}
+                language={language}
+                active={journeyActive}
+                paused={journeyPaused}
+                visited={visited}
+                currentPoint={currentPoint}
+                accuracyMeters={locationAccuracy}
+                nearbyStopId={nearbyStopId}
+                locationMessage={journeyLocationMessage}
+                onStart={startJourney}
+                onPause={pauseJourney}
+                onContinue={continueJourney}
+                onEnd={endJourney}
+                onReset={resetJourney}
+                onMarkVisited={markJourneyVisited}
+                onOpenMap={() => {
+                  setActiveEvent(undefined);
+                  setView("map");
+                }}
+              />
+            )}
+
+            {route.steps.length > 0 && (
               <RouteMapPreview
                 route={route}
                 startPoint={startPoint}
+                currentPoint={currentPoint}
+                visited={visited}
+                journeyActive={journeyActive}
                 language={language}
                 onOpenMap={() => {
                   setActiveEvent(undefined);
@@ -553,66 +773,70 @@ export function NightPlanner() {
               />
             )}
 
-            <div className="route-controls">
-              <div className="section-heading">
-                <h2>
-                  {selected.size}{" "}
-                  {selected.size === 1 ? t.stop : t.stops} {t.selected}
-                </h2>
-                {selected.size > 0 && (
-                  <button className="text-button" onClick={() => setSelected(new Set())}>
-                    {t.clear}
-                  </button>
-                )}
+            {!journeyActive && !journeyComplete && (
+              <div className="route-controls">
+                <div className="section-heading">
+                  <h2>
+                    {selected.size}{" "}
+                    {selected.size === 1 ? t.stop : t.stops} {t.selected}
+                  </h2>
+                  {selected.size > 0 && (
+                    <button className="text-button" onClick={() => setSelected(new Set())}>
+                      {t.clear}
+                    </button>
+                  )}
+                </div>
+
+                <div className="start-explainer">
+                  <strong>{t.startTitle}</strong>
+                  <span>{t.startHelp}</span>
+                </div>
+
+                <div className="start-options">
+                  {startOptions.map((option) => (
+                    <button
+                      key={option.id}
+                      className={startMode === option.id ? "is-active" : ""}
+                      onClick={() => setStart(option.id)}
+                    >
+                      {option.icon}
+                      <span>
+                        <strong>{option.label}</strong>
+                        {option.hint && <small>{option.hint}</small>}
+                      </span>
+                      {startMode === option.id && <Check size={16} />}
+                    </button>
+                  ))}
+                </div>
+                {geoMessage && <p className="geo-message">{geoMessage}</p>}
+
+                <label className="time-control">
+                  <span>{t.startTime}</span>
+                  <input
+                    type="time"
+                    min="17:00"
+                    max="23:59"
+                    value={`${String(Math.floor(startTime / 60)).padStart(2, "0")}:${String(startTime % 60).padStart(2, "0")}`}
+                    onChange={(event) => {
+                      const [hours, minutes] = event.target.value
+                        .split(":")
+                        .map(Number);
+                      setStartTime(hours * 60 + minutes);
+                    }}
+                  />
+                </label>
               </div>
+            )}
 
-              <div className="start-explainer">
-                <strong>{t.startTitle}</strong>
-                <span>{t.startHelp}</span>
-              </div>
-
-              <div className="start-options">
-                {startOptions.map((option) => (
-                  <button
-                    key={option.id}
-                    className={startMode === option.id ? "is-active" : ""}
-                    onClick={() => setStart(option.id)}
-                  >
-                    {option.icon}
-                    <span>
-                      <strong>{option.label}</strong>
-                      {option.hint && <small>{option.hint}</small>}
-                    </span>
-                    {startMode === option.id && <Check size={16} />}
-                  </button>
-                ))}
-              </div>
-              {geoMessage && <p className="geo-message">{geoMessage}</p>}
-
-              <label className="time-control">
-                <span>{t.startTime}</span>
-                <input
-                  type="time"
-                  min="17:00"
-                  max="23:59"
-                  value={`${String(Math.floor(startTime / 60)).padStart(2, "0")}:${String(startTime % 60).padStart(2, "0")}`}
-                  onChange={(event) => {
-                    const [hours, minutes] = event.target.value
-                      .split(":")
-                      .map(Number);
-                    setStartTime(hours * 60 + minutes);
-                  }}
-                />
-              </label>
-            </div>
-
-            <RoutePanel
-              route={route}
-              language={language}
-              onDiscover={() => setView("discover")}
-              onShare={shareRoute}
-              shareDone={shareDone}
-            />
+            {!journeyActive && !journeyComplete && (
+              <RoutePanel
+                route={route}
+                language={language}
+                onDiscover={() => setView("discover")}
+                onShare={shareRoute}
+                shareDone={shareDone}
+              />
+            )}
           </section>
         </div>
       </div>

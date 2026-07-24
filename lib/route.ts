@@ -26,6 +26,13 @@ export const landmarkStarts = {
   alpini: { x: 40.0, y: 10.2 },
 };
 
+const mapBounds = {
+  west: 10.3578,
+  east: 10.3832,
+  north: 46.4776,
+  south: 46.4588,
+};
+
 export function distanceMeters(a: MapPoint, b: MapPoint) {
   const dx = (a.x - b.x) * 18;
   const dy = (a.y - b.y) * 17;
@@ -167,12 +174,32 @@ export function planRoute(
 }
 
 export function geolocationToMap(latitude: number, longitude: number): MapPoint {
-  const west = 10.3578;
-  const east = 10.3832;
-  const north = 46.4776;
-  const south = 46.4588;
   return {
-    x: Math.max(0, Math.min(100, ((longitude - west) / (east - west)) * 100)),
-    y: Math.max(0, Math.min(100, ((north - latitude) / (north - south)) * 100)),
+    x: Math.max(
+      0,
+      Math.min(
+        100,
+        ((longitude - mapBounds.west) / (mapBounds.east - mapBounds.west)) *
+          100,
+      ),
+    ),
+    y: Math.max(
+      0,
+      Math.min(
+        100,
+        ((mapBounds.north - latitude) /
+          (mapBounds.north - mapBounds.south)) *
+          100,
+      ),
+    ),
   };
+}
+
+export function isInsideBormioMap(latitude: number, longitude: number) {
+  return (
+    longitude >= mapBounds.west &&
+    longitude <= mapBounds.east &&
+    latitude >= mapBounds.south &&
+    latitude <= mapBounds.north
+  );
 }

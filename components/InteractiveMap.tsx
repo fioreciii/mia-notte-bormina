@@ -1,6 +1,6 @@
 "use client";
 
-import { LocateFixed, MapPin, X } from "lucide-react";
+import { Check, LocateFixed, MapPin, Navigation, X } from "lucide-react";
 import { EventStop, events, formatMinutes } from "@/lib/events";
 import { Language, eventTitle, ui } from "@/lib/i18n";
 import { MapPoint, PlannedRoute } from "@/lib/route";
@@ -12,6 +12,10 @@ type Props = {
   activeEvent?: EventStop;
   route: PlannedRoute;
   startPoint?: MapPoint;
+  currentPoint?: MapPoint;
+  visited?: Set<number>;
+  journeyActive?: boolean;
+  nearbyStopId?: number;
   pickingStart: boolean;
   onToggle: (id: number) => void;
   onActive: (event?: EventStop) => void;
@@ -24,15 +28,23 @@ export function InteractiveMap({
   activeEvent,
   route,
   startPoint,
+  currentPoint,
+  visited = new Set<number>(),
+  journeyActive = false,
+  nearbyStopId,
   pickingStart,
   onToggle,
   onActive,
   onMapStart,
 }: Props) {
   const t = ui[language];
+  const remainingSteps = journeyActive
+    ? route.steps.filter((step) => !visited.has(step.stop.id))
+    : route.steps;
+  const routeOrigin = journeyActive ? currentPoint : startPoint;
   const points = [
-    ...(startPoint ? [startPoint] : []),
-    ...route.steps.map((step) => step.stop),
+    ...(routeOrigin ? [routeOrigin] : []),
+    ...remainingSteps.map((step) => step.stop),
   ];
   const routePath = points.map((point) => `${point.x},${point.y}`).join(" ");
 
@@ -69,7 +81,7 @@ export function InteractiveMap({
           </svg>
         )}
 
-        {startPoint && (
+        {startPoint && !journeyActive && (
           <span
             className="start-marker"
             style={{ left: `${startPoint.x}%`, top: `${startPoint.y}%` }}
@@ -79,31 +91,58 @@ export function InteractiveMap({
           </span>
         )}
 
+        {currentPoint && journeyActive && (
+          <span
+            className="current-location-marker"
+            style={{ left: `${currentPoint.x}%`, top: `${currentPoint.y}%` }}
+            aria-label={t.journeyActive}
+          >
+            <span />
+            <Navigation size={14} fill="currentColor" />
+          </span>
+        )}
+
         {events.map((stop) => {
           const routeIndex = route.steps.findIndex(
             (step) => step.stop.id === stop.id,
           );
           const isSelected = selected.has(stop.id);
+          const isVisited = visited.has(stop.id);
+          const isNearby = nearbyStopId === stop.id;
           return (
             <button
               key={stop.id}
               className={`map-marker ${isSelected ? "is-selected" : ""} ${
                 activeEvent?.id === stop.id ? "is-active" : ""
+              } ${isVisited ? "is-visited" : ""} ${
+                isNearby ? "is-nearby" : ""
               }`}
               style={{
                 left: `${stop.x}%`,
                 top: `${stop.y}%`,
-                "--marker-color": isSelected
-                  ? "var(--primary)"
-                  : "var(--marker-default)",
+                "--marker-color": isVisited
+                  ? "var(--gold)"
+                  : isNearby
+                    ? "var(--copper)"
+                    : isSelected
+                      ? "var(--primary)"
+                      : "var(--marker-default)",
               } as React.CSSProperties}
               onClick={(event) => {
                 event.stopPropagation();
                 onActive(stop);
               }}
-              aria-label={`${stop.id}. ${eventTitle(stop, language)}`}
+              aria-label={`${stop.id}. ${eventTitle(stop, language)}${
+                isVisited ? ` · ${t.journeyVisited}` : ""
+              }`}
             >
-              {routeIndex >= 0 ? routeIndex + 1 : stop.id}
+              {isVisited ? (
+                <Check size={13} strokeWidth={3} />
+              ) : routeIndex >= 0 ? (
+                routeIndex + 1
+              ) : (
+                stop.id
+              )}
             </button>
           );
         })}
@@ -147,13 +186,18 @@ export function InteractiveMap({
         )}
       </div>
       <div className="map-footer">
-        <span>{t.mapHint}</span>
-        {route.steps.length > 0 && (
+        <span>{journeyActive ? t.journeyActive : t.mapHint}</span>
+        {journeyActive ? (
+          <span>
+            {route.steps.filter((step) => visited.has(step.stop.id)).length}/
+            {route.steps.length} {t.journeyVisited}
+          </span>
+        ) : route.steps.length > 0 ? (
           <span>
             {route.steps.length} {route.steps.length === 1 ? t.stop : t.stops} ·{" "}
             {formatMinutes(route.finishAt)}
           </span>
-        )}
+        ) : null}
       </div>
     </section>
   );

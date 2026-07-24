@@ -1,24 +1,34 @@
 "use client";
 
-import { MapPinned, MapPin } from "lucide-react";
+import { Check, MapPinned, MapPin, Navigation } from "lucide-react";
 import { Language, eventTitle, ui } from "@/lib/i18n";
 import { MapPoint, PlannedRoute } from "@/lib/route";
 
 export function RouteMapPreview({
   route,
   startPoint,
+  currentPoint,
+  visited = new Set<number>(),
+  journeyActive = false,
   language,
   onOpenMap,
 }: {
   route: PlannedRoute;
   startPoint?: MapPoint;
+  currentPoint?: MapPoint;
+  visited?: Set<number>;
+  journeyActive?: boolean;
   language: Language;
   onOpenMap: () => void;
 }) {
   const t = ui[language];
+  const remainingSteps = journeyActive
+    ? route.steps.filter((step) => !visited.has(step.stop.id))
+    : route.steps;
+  const routeOrigin = journeyActive ? currentPoint : startPoint;
   const points = [
-    ...(startPoint ? [startPoint] : []),
-    ...route.steps.map((step) => step.stop),
+    ...(routeOrigin ? [routeOrigin] : []),
+    ...remainingSteps.map((step) => step.stop),
   ];
   const routePath = points.map((point) => `${point.x},${point.y}`).join(" ");
 
@@ -44,7 +54,7 @@ export function RouteMapPreview({
           draggable={false}
         />
 
-        {route.steps.length > 1 && (
+        {points.length > 1 && (
           <svg
             className="route-lines route-preview-lines"
             viewBox="0 0 100 100"
@@ -56,7 +66,7 @@ export function RouteMapPreview({
           </svg>
         )}
 
-        {startPoint && (
+        {startPoint && !journeyActive && (
           <span
             className="start-marker route-preview-start"
             style={{ left: `${startPoint.x}%`, top: `${startPoint.y}%` }}
@@ -66,17 +76,34 @@ export function RouteMapPreview({
           </span>
         )}
 
+        {currentPoint && journeyActive && (
+          <span
+            className="current-location-marker route-preview-current"
+            style={{ left: `${currentPoint.x}%`, top: `${currentPoint.y}%` }}
+            aria-label={t.journeyActive}
+          >
+            <span />
+            <Navigation size={12} fill="currentColor" />
+          </span>
+        )}
+
         {route.steps.map((step, index) => (
           <span
             key={step.stop.id}
-            className="route-preview-marker"
+            className={`route-preview-marker ${
+              visited.has(step.stop.id) ? "is-visited" : ""
+            }`}
             style={{
               left: `${step.stop.x}%`,
               top: `${step.stop.y}%`,
             }}
             title={`${index + 1}. ${eventTitle(step.stop, language)}`}
           >
-            {index + 1}
+            {visited.has(step.stop.id) ? (
+              <Check size={12} strokeWidth={3} />
+            ) : (
+              index + 1
+            )}
           </span>
         ))}
       </div>
