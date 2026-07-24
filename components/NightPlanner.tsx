@@ -848,7 +848,12 @@ export function NightPlanner() {
           </a>
         </div>
         <div className="footer-signature">
-          <span>{t.madeWithLove}</span>
+          <span>
+            {t.madeWithLove}
+            <span className="footer-love-mark" aria-hidden="true">
+              (づ๑•ᴗ•๑)づ♡
+            </span>
+          </span>
           <a href="mailto:fioreci.works@gmail.com">
             fioreci.works@gmail.com
           </a>
